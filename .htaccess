@@ -1,0 +1,11 @@
+
+<ifmodule mod_rewrite.c>
+# prevent directory listings
+Options -Indexes
+IndexIgnore */*
+
+# follow symbolic links
+Options FollowSymlinks
+RewriteEngine on
+RewriteRule ^(.+)?$ web/$1 [L,PT]
+</ifmodule>
