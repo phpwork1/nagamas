@@ -6,6 +6,7 @@ use yii\jui\DatePicker;
 use app\components\base\AppLabels;
 use app\components\base\AppConstants;
 use app\assets\ReportAsset;
+use kartik\select2\Select2;
 
 ReportAsset::register($this);
 
@@ -24,17 +25,44 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php $form = ActiveForm::begin(); ?>
 
     <div class="col-md-2 col-md-offset-8">
-        <?= Html::dropDownList('month', null, AppConstants::$month, ['id' => 'month-select', 'class' => 'input-lg form-control', 'options' => [$month => ['Selected' => true]]]) ?>
+        <?= Select2::widget([
+            'name' => 'month',
+            'value' => $month,
+            'data' => AppConstants::$month,
+            'options' => ['id' => 'month-select', 'class' => 'input-lg form-control']
+        ]); ?>
     </div>
 
     <div class="col-md-2">
-        <?= Html::dropDownList('year', null, AppConstants::$year, ['id' => 'year-select', 'class' => 'input-lg form-control', 'options' => [$year => ['Selected' => true]]]) ?>
+        <?= Select2::widget([
+            'name' => 'year',
+            'value' => $year,
+            'data' => AppConstants::$year,
+            'options' => ['id' => 'year-select', 'class' => 'input-lg form-control']
+        ]); ?>
     </div>
 
     <div class="col-md-12">
         <div class="text-center">
-            <h3>Laporan Penjualan Bulan <?= AppConstants::$month[$month] ?>
-                Tahun <?= AppConstants::$year[$year] ?> </h3>
+            <h3><?= sprintf("%s %s %s", AppLabels::REPORT, AppLabels::SELL, AppLabels::MONTH) ?> <?= AppConstants::$month[$month] ?>
+                <?= AppLabels::YEAR ?> <?= AppConstants::$year[$year] ?> </h3>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <table id="total" class="table table-bordered table-hover">
+                    <tbody>
+                    <tr>
+                        <th class="text-left" width="60%">
+                            <?= sprintf("%s %s untuk %s %s", AppLabels::TOTAL, AppLabels::WEIGHT, AppConstants::$month[$month], $year); ?>
+                        </th>
+                        <td class="text-right yellow" width="40%">
+                            <?= Yii::$app->formatter->asInteger(\app\models\Transaction::getTotalWeightByMonthYear($month, $year)) ?>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         <?php foreach ($model as $key => $transaction) : ?>
@@ -72,10 +100,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                         echo $transaction->t_date;
                                     } ?> </td>
                                 <td class="text-center"><?= $transaction->buyer->b_name ?></td>
-                                <td class="text-center"><?= Yii::$app->formatter->asInteger($weightTotal) ?> </td>
+                                <td class="text-center yellow"><?= Yii::$app->formatter->asInteger($weightTotal) ?> </td>
                                 <td class="text-center"><?= Yii::$app->formatter->asCurrency($priceTotal) ?> </td>
                                 <td class="text-center"><?= Yii::$app->formatter->asCurrency($priceTotal * 0.005) ?></td>
-                                <td class="text-center"><?= Yii::$app->formatter->asCurrency($priceTotal * 0.995) ?></td>
+                                <td class="text-center yellow"><?= Yii::$app->formatter->asCurrency($priceTotal * 0.995) ?></td>
                                 <td class="text-center"><?= $t ?></td>
                                 <td class="text-center"><?= Yii::$app->formatter->asCurrency(($priceTotal != 0 && $weightTotal != 0) ? $priceTotal / $weightTotal : 0) ?></td>
                             </tr>

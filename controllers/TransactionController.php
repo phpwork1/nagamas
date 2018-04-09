@@ -213,6 +213,7 @@ class TransactionController extends Controller
     {
         $model = $this->findModel($id);
 
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->session->setFlash('success', AppConstants::MESSAGE_SAVE_UPDATE);
             return $this->redirect(['index']);

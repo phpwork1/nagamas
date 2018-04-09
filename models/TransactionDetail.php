@@ -26,6 +26,7 @@ use yii\base\Exception;
 class TransactionDetail extends AppModel
 {
     public $total;
+    public $buyer;
     /**
      * @inheritdoc
      */
@@ -60,6 +61,7 @@ class TransactionDetail extends AppModel
             'td_rubber_weight' => AppLabels::WEIGHT,
             'td_rubber_price' => AppLabels::PRICE,
             'total' => AppLabels::TOTAL,
+            'buyer' => AppLabels::BUYER,
         ];
     }
 
@@ -80,11 +82,11 @@ class TransactionDetail extends AppModel
         try {
             $this->load($request);
 
-            $todayTransaction = Transaction::find()->where(['t_date' => Yii::$app->formatter->asDate(time(), AppConstants::FORMAT_DB_DATE_PHP), 'buyer_id' => $request['buyer']])->one();
+            $todayTransaction = Transaction::find()->where(['t_date' => Yii::$app->formatter->asDate(time(), AppConstants::FORMAT_DB_DATE_PHP), 'buyer_id' => $request['TransactionDetail']['buyer']])->one();
             if(!isset($todayTransaction)){
                 $model = new Transaction();
                 $model->t_date = Yii::$app->formatter->asDate(time(), AppConstants::FORMAT_DB_DATE_PHP);
-                $model->buyer_id = $request['buyer'];
+                $model->buyer_id = $request['TransactionDetail']['buyer'];
                 if (!$model->save()) {
                     $errors = array_merge($errors, $this->errors);
                     throw new Exception();

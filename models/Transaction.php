@@ -40,7 +40,8 @@ class Transaction extends AppModel
             [['buyer_id', 't_date'], 'required', 'message' => AppConstants::VALIDATE_REQUIRED],
             [['buyer_id'], 'integer', 'message' => AppConstants::VALIDATE_REQUIRED],
             [['t_date'], 'safe'],
-            [['t_date', 'buyer_id'], 'unique', 'message' => AppConstants::VALIDATE_UNIQUE, 'targetAttribute' => ['t_date', 'buyer_id']],
+            [['t_date'], 'unique', 'message' => AppConstants::VALIDATE_UNIQUE, 'targetAttribute' => ['t_date', 'buyer_id']],
+            [['buyer_id'], 'unique', 'message' => AppConstants::VALIDATE_UNIQUE, 'targetAttribute' => ['t_date', 'buyer_id']],
             [['buyer_id'], 'exist', 'skipOnError' => true, 'targetClass' => Buyer::className(), 'targetAttribute' => ['buyer_id' => 'id']],
         ];
     }
@@ -76,6 +77,17 @@ class Transaction extends AppModel
 
     public function getTransactionDetailsByType($type){
         return TransactionDetail::find()->where(['transaction_id' => $this->id, 'td_type' => $type])->all();
+    }
+
+    public static function getTotalWeightByMonthYear($month, $year){
+        $totalWeight = 0;
+        $allTransaction = Transaction::findBySql("SELECT * FROM transaction where EXTRACT(MONTH FROM t_date) = $month AND EXTRACT(YEAR FROM t_date) = $year")->all();
+        foreach($allTransaction as $key => $transaction){
+            foreach($transaction->transactionDetails as $keyDetail => $detail){
+                $totalWeight += $detail->td_rubber_weight;
+            }
+        }
+        return $totalWeight;
     }
 
     public function beforeSave($insert) {

@@ -23,13 +23,16 @@ class AppConstants
     //const APP_BACKEND_BASE_URL = '/';
     const IMG_RESPONSIVE = 'img-responsive';
 
-    //API V1 CONFIG
+    // COMMON CONSTANT
+    const LABOR_CONSTANT = '35';
+    const DEFAULT_BUYER = '2'; //ABP
 
     //MESSAGE
     const ERR_INTEGRITY_CONSTRAINT_VIOLATION = 'Database Integrity Violation';
     const MESSAGE_SAVE_SUCCESS = 'Data is successfully saved';
     const MESSAGE_SAVE_UPDATE = 'Data is successfully updated';
     const MESSAGE_SAVE_DELETE = 'Data is successfully deleted';
+
 
     // VALIDATION MESSAGES
     const VALIDATE_REQUIRED = '{attribute} harus diisi.';
@@ -62,7 +65,14 @@ class AppConstants
 
     //FORM TEMPLATE
     const ACTIVE_FORM_CLASS_LABEL_COL_3 = 'col-md-3 control-label no-padding-right';
-    const ACTIVE_FORM_TEMPLATE_INPUT_COL_9_FULL = '{label} <div class="col-md-9">{input}<span class="help-inline col-xs-12"><span class="middle">{error}{hint}</span></span></div>';
+    const ACTIVE_FORM_TEMPLATE_INPUT_COL_9_FULL = '{label}<div class="col-md-9">{input}<span class="help-inline col-xs-12"><span class="middle">{error}{hint}</span></span></div>';
+    const ACTIVE_FORM_TEMPLATE_INPUT_COL_FULL = '{label}<div class="col-md-12">{input}<span class="help-inline col-xs-12"><span class="middle">{error}{hint}</span></span></div>';
+
+    //ACTION
+    const ACTION_PURCHASE = 'purchase';
+    CONST ACTION_TRANSACTION = 'transaction';
+
+
 
     //MONTH
     public static $month = [
@@ -122,6 +132,27 @@ class AppConstants
         '2028' => '2028',
         '2029' => '2029',
         '2030' => '2030',
+    ];
+
+    //MONTH
+    public static $commission = [
+        '0' => '0%',
+        '0.5' => '0.5%',
+        '1' => '1%',
+        '2' => '2%',
+        '3' => '3%',
+        '4' => '4%',
+        '5' => '5%',
+    ];
+
+    //MONTH
+    public static $stamp = [
+        '0' => '0 buah',
+        '1' => '1 buah',
+        '2' => '2 buah',
+        '3' => '3 buah',
+        '4' => '4 buah',
+        '5' => '5 buah',
     ];
 
 }

@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use app\components\base\AppLabels;
+use kartik\select2\Select2;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\TransactionSearch */
@@ -33,7 +34,15 @@ $this->params['buttons'] = [
                 'attribute' => 'buyer_id',
                 'value' => 'buyer.b_name',
                 'label' => sprintf("%s %s", AppLabels::NAME, AppLabels::BUYER),
-                'filter' => Html::activeDropDownList($searchModel, 'buyer_id', \app\models\Buyer::map(), ['prompt' => '--Silahkan Pilih--', 'class' => 'chosen-select form-control'])
+                'filter' => Select2::widget([
+                    'model' => $searchModel,
+                    'attribute' => 'buyer_id',
+                    'data' => \app\models\Buyer::map(),
+                    'options' => ['class' => 'form-control', 'placeholder' => '--Silahkan Pilih--'],
+                    'pluginOptions' => [
+                        'allowClear' => true
+                    ],
+                ]),
             ],
             [
                 'attribute' => 't_date',

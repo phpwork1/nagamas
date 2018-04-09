@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use app\components\base\AppConstants;
+use kartik\select2\Select2;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\TransactionDetail */
@@ -13,9 +14,11 @@ use app\components\base\AppConstants;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'td_type')
-    ->dropDownList(AppConstants::$type)
-    ->label(null); ?>
+    <?= $form->field($model, 'td_type')->widget(Select2::classname(), [
+        'data' => AppConstants::$type,
+        'options' => ['class' => 'form-control', 'placeholder' => '--Silahkan Pilih--'],
+    ])->label(null); ?>
+
 
     <?= $form->field($model, 'td_name')->textInput(['maxlength' => true]) ?>
 
