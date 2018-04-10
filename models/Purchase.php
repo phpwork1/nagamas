@@ -14,6 +14,9 @@ use Yii;
  * @property int $seller_id
  * @property int $p_fresh
  * @property int $p_transfer
+ * @property int $p_commission
+ * @property int $p_stamp
+ * @property int $p_other
  * @property int $created_by
  * @property int $created_at
  * @property int $updated_by
@@ -24,6 +27,11 @@ use Yii;
  */
 class Purchase extends AppModel
 {
+    public $total_dirty;
+    public $total_clean;
+    public $commission;
+    public $stamp;
+    public $labor;
     /**
      * @inheritdoc
      */
@@ -38,8 +46,10 @@ class Purchase extends AppModel
     public function rules()
     {
         return [
-            [['seller_id', 'p_date'], 'required', 'message' => AppConstants::VALIDATE_REQUIRED],
+            [['seller_id', 'p_date', 'p_commission', 'p_stamp'], 'required', 'message' => AppConstants::VALIDATE_REQUIRED],
+            [['p_stamp'], 'integer', 'message' => AppConstants::VALIDATE_INTEGER],
             [['p_date'], 'safe'],
+            [['p_commission'], 'string', 'max' => 20],
             [['seller_id'], 'exist', 'skipOnError' => true, 'targetClass' => Seller::className(), 'targetAttribute' => ['seller_id' => 'id']],
         ];
     }
@@ -54,6 +64,12 @@ class Purchase extends AppModel
             'p_date' => AppLabels::DATE,
             'seller_id' => sprintf("%s %s", AppLabels::NAME, AppLabels::SELLER),
             'seller_name' => AppLabels::SELLER,
+            'total_clean' => sprintf("%s %s", AppLabels::VALUE, AppLabels::CLEAN),
+            'total_dirty' => sprintf("%s %s", AppLabels::VALUE, AppLabels::DIRTY),
+            'p_commission' => AppLabels::COMMISSION,
+            'p_stamp' => AppLabels::STAMP,
+            'p_other' => AppLabels::OTHER,
+            'labor' => AppLabels::LABOR,
         ];
     }
 
@@ -81,6 +97,7 @@ class Purchase extends AppModel
             $this->p_date = Yii::$app->formatter->asDate($this->p_date, AppConstants::FORMAT_DB_DATE_PHP);
         }
 
+
         return true;
     }
 
@@ -91,6 +108,18 @@ class Purchase extends AppModel
         if (!$this->p_date == '') {
             $this->p_date = Yii::$app->formatter->asDate($this->p_date, AppConstants::FORMAT_DATE_PHP_SHOW_MONTH);
         }
+
+        $this->total_dirty = $this->getTotal();
+        $this->commission = $this->total_dirty*$this->p_commission/100;
+        $this->stamp = $this->p_stamp*AppConstants::DEFAULT_STAMP_PRICE;
+        $this->labor = $this->getTotalWeight()*AppConstants::LABOR_CONSTANT;
+        $this->total_clean = $this->total_dirty-$this->commission-$this->stamp-$this->labor-$this->p_other;
+
+
+    }
+
+    public function updateTotal(){
+        $this->total = $this->getTotal();
     }
 
     public static function getPurchasesByDate($date){
@@ -131,11 +160,22 @@ class Purchase extends AppModel
         return $totalWeight;
     }
 
-    public function getTotalPrice(){
-        $totalPrice = 0;
+    public function getTotal(){
+        $total = 0;
         foreach($this->purchaseDetails as $key2 => $detail){
-            $totalPrice += $detail->total_clean;
+            $total += $detail->total;
         }
-        return $totalPrice;
+        return $total;
+    }
+
+    public static function getTotalPriceByDate($date){
+        $total = 0;
+        $purchases = self::getPurchasesByDate(Yii::$app->formatter->asDate($date, AppConstants::FORMAT_DB_DATE_PHP));
+        foreach($purchases as $key1 => $purchase){
+            foreach($purchase->purchaseDetails as $key2 => $detail){
+                $total += $detail->total;
+            }
+        }
+        return $total;
     }
 }

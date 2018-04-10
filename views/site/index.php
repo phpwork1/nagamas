@@ -4,6 +4,7 @@
 /* @var $model app\models\TransactionDetail */
 
 /* @var $modelPurchase app\models\PurchaseDetail */
+
 /* @var $lastPurchases app\models\Purchase */
 
 use yii\bootstrap\ActiveForm;
@@ -13,6 +14,7 @@ use app\components\base\AppLabels;
 use app\models\Buyer;
 use app\models\Seller;
 use kartik\select2\Select2;
+use kartik\number\NumberControl;
 
 $this->title = 'Dashboard';
 ?>
@@ -42,10 +44,32 @@ $this->title = 'Dashboard';
                     ->textInput(['class' => 'form-control text-center input-lg', 'placeholder' => AppLabels::GROUP])->label(false); ?>
 
                 <?= $form->field($model, 'td_rubber_weight', ['template' => AppConstants::ACTIVE_FORM_TEMPLATE_INPUT_COL_FULL])
-                    ->textInput(['class' => 'form-control text-center input-lg', 'placeholder' => AppLabels::WEIGHT])->label(false); ?>
+                    ->widget(NumberControl::className(),
+                        [
+                            'model' => $model,
+                            'displayOptions' => [
+                                'placeholder' => AppLabels::WEIGHT,
+                                'class' => 'form-control text-center input-lg'
+                            ],
+                            'maskedInputOptions' => [
+                                'groupSeparator' => '.',
+                                'radixPoint' => ','
+                            ],
+                        ])->label(false); ?>
 
                 <?= $form->field($model, 'td_rubber_price', ['template' => AppConstants::ACTIVE_FORM_TEMPLATE_INPUT_COL_FULL])
-                    ->textInput(['class' => 'form-control text-center input-lg', 'placeholder' => AppLabels::PRICE])->label(false); ?>
+                    ->widget(NumberControl::className(),
+                        [
+                            'model' => $model,
+                            'displayOptions' => [
+                                'placeholder' => AppLabels::PRICE,
+                                'class' => 'form-control text-center input-lg'
+                            ],
+                            'maskedInputOptions' => [
+                                'groupSeparator' => '.',
+                                'radixPoint' => ','
+                            ],
+                        ])->label(false); ?>
 
                 <?= Html::hiddenInput("action", AppConstants::ACTION_TRANSACTION); ?>
 
@@ -78,23 +102,46 @@ $this->title = 'Dashboard';
                     ->textInput(['class' => 'form-control text-center input-lg', 'placeholder' => AppLabels::GROUP])->label(false); ?>
 
                 <?= $form->field($modelPurchase, 'pd_rubber_weight', ['template' => AppConstants::ACTIVE_FORM_TEMPLATE_INPUT_COL_FULL])
-                    ->textInput(['class' => 'form-control text-center input-lg', 'placeholder' => AppLabels::WEIGHT])->label(false); ?>
+                    ->widget(NumberControl::className(),
+                        [
+                            'model' => $modelPurchase,
+                            'displayOptions' => [
+                                'placeholder' => AppLabels::WEIGHT,
+                                'class' => 'form-control text-center input-lg'
+                            ],
+                            'maskedInputOptions' => [
+                                'groupSeparator' => '.',
+                                'radixPoint' => ','
+                            ],
+                        ])->label(false); ?>
 
                 <?= $form->field($modelPurchase, 'pd_rubber_price', ['template' => AppConstants::ACTIVE_FORM_TEMPLATE_INPUT_COL_FULL])
-                    ->textInput(['class' => 'form-control text-center input-lg', 'placeholder' => AppLabels::PRICE])->label(false); ?>
+                    ->widget(NumberControl::className(),
+                        [
+                            'model' => $modelPurchase,
+                            'displayOptions' => [
+                                'placeholder' => AppLabels::PRICE,
+                                'class' => 'form-control text-center input-lg'
+                            ],
+                            'maskedInputOptions' => [
+                                'groupSeparator' => '.',
+                                'radixPoint' => ','
+                            ],
+                        ])->label(false); ?>
 
-                <?= $form->field($modelPurchase, 'pd_commission', ['template' => AppConstants::ACTIVE_FORM_TEMPLATE_INPUT_COL_FULL])->widget(Select2::classname(), [
-                    'data' => AppConstants::$commission,
-                    'options' => ['class' => 'input-lg form-control', 'placeholder' => '-- Komisi --'],
-                ])->label(false); ?>
-
-                <?= $form->field($modelPurchase, 'pd_stamp', ['template' => AppConstants::ACTIVE_FORM_TEMPLATE_INPUT_COL_FULL])->widget(Select2::classname(), [
-                    'data' => AppConstants::$stamp,
-                    'options' => ['class' => 'input-lg form-control', 'placeholder' => '-- Materai --'],
-                ])->label(false); ?>
-
-                <?= $form->field($modelPurchase, 'pd_other', ['template' => AppConstants::ACTIVE_FORM_TEMPLATE_INPUT_COL_FULL])
-                    ->textInput(['class' => 'form-control text-center input-lg', 'placeholder' => AppLabels::OTHER])->label(false); ?>
+                <div class="col-md-12">
+                    <?= NumberControl::widget([
+                        'name' => 'other',
+                        'displayOptions' => [
+                            'placeholder' => AppLabels::OTHER,
+                            'class' => 'form-control text-center input-lg'
+                        ],
+                        'maskedInputOptions' => [
+                            'groupSeparator' => '.',
+                            'radixPoint' => ','
+                        ],
+                    ]) ?>
+                </div>
 
                 <div class="text-right">
                     <?= Html::checkbox("transfer", false, ['label' => 'Transfer']); ?>
@@ -154,12 +201,12 @@ $this->title = 'Dashboard';
                     </tr>
                     </thead>
                     <tbody>
-                    <?php foreach($lastPurchases as $key => $purchase) : ?>
+                    <?php foreach ($lastPurchases as $key => $purchase) : ?>
                         <tr>
                             <td><?= $purchase->id ?></td>
                             <td><?= $purchase->seller->s_name ?></td>
                             <td><?= Yii::$app->formatter->asInteger($purchase->getTotalWeight()) ?></td>
-                            <td><?= Yii::$app->formatter->asCurrency($purchase->getTotalPrice()) ?></td>
+                            <td><?= Yii::$app->formatter->asCurrency($purchase->getTotal()) ?></td>
                         </tr>
                     <?php endforeach; ?>
                     </tbody>

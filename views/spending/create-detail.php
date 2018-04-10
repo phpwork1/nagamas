@@ -1,20 +1,19 @@
 <?php
 
-use yii\helpers\Html;
-
+use app\components\base\AppLabels;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\SpendingDetail */
 
-$this->title = 'Create Spending Detail';
-$this->params['breadcrumbs'][] = ['label' => 'Spending Details', 'url' => ['index']];
+$this->title = sprintf('%s %s', AppLabels::ADD, AppLabels::SPENDING);
+$this->params['breadcrumbs'][] = ['label' => AppLabels::SPENDING_REPORT, 'url' => ['spend-report']];
+$this->params['breadcrumbs'][] = ['label' => AppLabels::SPENDING    , 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => sprintf("%s Tgl: %s",AppLabels::SPENDING, $model->spending->s_date), 'url' => ['view', 'id' => $model->spending_id]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="spending-detail-create">
+<div class="spending-create">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <?= $this->render('_form', [
+    <?= $this->render('_form-detail', [
         'model' => $model,
     ]) ?>
 

@@ -2,10 +2,8 @@
 
 namespace app\models;
 
-use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\PurchaseDetail;
 
 /**
  * PurchaseDetailSearch represents the model behind the search form of `app\models\PurchaseDetail`.
@@ -18,7 +16,7 @@ class PurchaseDetailSearch extends PurchaseDetail
     public function rules()
     {
         return [
-            [['pd_name', 'id', 'purchase_id', 'pd_rubber_weight', 'pd_rubber_price', 'pd_commission', 'pd_stamp', 'pd_other'], 'integer'],
+            [['pd_name', 'id', 'purchase_id', 'pd_rubber_weight', 'pd_rubber_price'], 'integer'],
         ];
     }
 
@@ -62,9 +60,6 @@ class PurchaseDetailSearch extends PurchaseDetail
             'purchase_id' => $this->purchase_id,
             'pd_rubber_weight' => $this->pd_rubber_weight,
             'pd_rubber_price' => $this->pd_rubber_price,
-            'pd_commission' => $this->pd_commission,
-            'pd_stamp' => $this->pd_stamp,
-            'pd_other' => $this->pd_stamp,
         ]);
 
         $query->andFilterWhere(['like', 'pd_name', $this->pd_name]);

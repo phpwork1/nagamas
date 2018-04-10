@@ -11,7 +11,6 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\SignupForm;
-use app\models\Transaction;
 use app\components\base\AppConstants;
 use app\models\PurchaseDetail;
 
@@ -36,7 +35,7 @@ class SiteController extends Controller
                         'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['logout', 'index'],
+                        'actions' => ['logout', 'index', 'profit-loss'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -136,6 +135,33 @@ class SiteController extends Controller
                 'model' => $model,
             ]);
         }
+    }
+
+    public function actionProfitLoss(){
+        $buyer = AppConstants::DEFAULT_BUYER;
+        $month = Yii::$app->formatter->asDate(time(), 'M');
+        $year = Yii::$app->formatter->asDate(time(), 'Y');
+
+        if (Yii::$app->request->isPost) {
+            $requestData = Yii::$app->request->post();
+            if (isset($requestData['buyer'])) {
+                $buyer = $requestData['buyer'];
+            }
+
+            if (isset($requestData['month'])) {
+                $month = $requestData['month'];
+            }
+
+            if (isset($requestData['year'])) {
+                $year = $requestData['year'];
+            }
+        }
+
+        return $this->render('profit-loss', [
+            'month' => $month,
+            'year' => $year,
+            'buyer' => $buyer,
+        ]);
     }
 
     /**

@@ -26,6 +26,11 @@ class AppConstants
     // COMMON CONSTANT
     const LABOR_CONSTANT = '35';
     const DEFAULT_BUYER = '2'; //ABP
+    const DEFAULT_PROFIT_LOSS_STAMP = 10000;
+    const DEFAULT_PROFIT_LOSS_LABOR = 37;
+    const DEFAULT_PPH = 0.5;
+    const DEFAULT_AFTER_PPH = 99.5;
+    const DEFAULT_STAMP_PRICE = 6000;
 
     //MESSAGE
     const ERR_INTEGRITY_CONSTRAINT_VIOLATION = 'Database Integrity Violation';
@@ -60,7 +65,7 @@ class AppConstants
     const VALIDATE_NOT_EXISTS = '{attribute} tidak ditemukan.';
 
     //DATE FORMAT
-    const FORMAT_DATE_PHP_SHOW_MONTH = 'php:d mm Y';
+    const FORMAT_DATE_PHP_SHOW_MONTH = 'php:d-m-Y';
     const FORMAT_DB_DATE_PHP = 'php:Y-m-d';
 
     //FORM TEMPLATE

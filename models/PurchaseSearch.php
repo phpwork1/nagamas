@@ -2,10 +2,8 @@
 
 namespace app\models;
 
-use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Purchase;
 
 /**
  * PurchaseSearch represents the model behind the search form of `app\models\Purchase`.
@@ -18,7 +16,7 @@ class PurchaseSearch extends Purchase
     public function rules()
     {
         return [
-            [['id', 'seller_id'], 'integer'],
+            [['id', 'seller_id', 'p_commission', 'p_stamp', 'p_other'], 'integer'],
             [['p_date'], 'safe'],
         ];
     }
@@ -62,6 +60,9 @@ class PurchaseSearch extends Purchase
             'id' => $this->id,
             'p_date' => $this->p_date,
             'seller_id' => $this->seller_id,
+            'pd_commission' => $this->p_commission,
+            'pd_stamp' => $this->p_stamp,
+            'pd_other' => $this->p_stamp,
         ]);
 
         return $dataProvider;

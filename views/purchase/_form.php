@@ -7,6 +7,7 @@ use app\components\base\AppLabels;
 use yii\jui\DatePicker;
 use app\models\Seller;
 use kartik\select2\Select2;
+use kartik\number\NumberControl;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Purchase */
@@ -34,6 +35,31 @@ use kartik\select2\Select2;
             'data' => Seller::map(),
             'options' => ['class' => 'input-lg form-control', 'placeholder' => '-- Silahkan Pilih --'],
         ])->label(null); ?>
+
+        <?= $form->field($model, 'p_commission', ['template' => AppConstants::ACTIVE_FORM_TEMPLATE_INPUT_COL_FULL])->widget(Select2::classname(), [
+            'data' => AppConstants::$commission,
+            'options' => ['class' => 'input-lg form-control', 'placeholder' => '-- Silahkan Pilih --'],
+        ])->label(null); ?>
+
+        <?= $form->field($model, 'p_stamp', ['template' => AppConstants::ACTIVE_FORM_TEMPLATE_INPUT_COL_FULL])->widget(Select2::classname(), [
+            'data' => AppConstants::$stamp,
+            'options' => ['class' => 'input-lg form-control', 'placeholder' => '-- Silahkan Pilih --'],
+        ])->label(null); ?>
+
+        <?= $form->field($model, 'p_other', ['template' => AppConstants::ACTIVE_FORM_TEMPLATE_INPUT_COL_FULL])
+            ->widget(NumberControl::className(),
+                [
+                    'model' => $model,
+                    'displayOptions' => [
+                        'class' => 'form-control text-center input-lg'
+                    ],
+                    'maskedInputOptions' => [
+                        'groupSeparator' => '.',
+                        'radixPoint' => ','
+                    ],
+                ])->label(null); ?>
+
+
 
     </div>
 

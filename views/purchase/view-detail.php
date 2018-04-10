@@ -1,6 +1,5 @@
 <?php
 
-use yii\helpers\Html;
 use yii\widgets\DetailView;
 use app\components\base\AppLabels;
 
@@ -18,15 +17,13 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'pd_name',
-            'seller_name',
+            [
+                    'attribute' => 'seller_name',
+                    'value' => $model->purchase->seller->s_name,
+            ],
             'pd_rubber_weight:integer',
             'pd_rubber_price:currency',
-            'total_dirty:currency',
-            'commission:currency',
-            'labor:currency',
-            'stamp:currency',
-            'pd_other:currency',
-            'total_clean:currency',
+            'total:currency',
         ],
     ]) ?>
 

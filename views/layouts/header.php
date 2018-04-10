@@ -66,10 +66,10 @@ use app\components\base\AppLabels;
                     <?= Html::a('<i class="fa fa-cart-plus fa-fw"></i> ' . 'Pembelian', ['/purchase/buy-report']); ?>
                 </li>
                 <li>
-                    <a href="<?= Yii::$app->getHomeUrl() ?>"><i class="fa fa-minus fa-fw"></i> Pengeluaran</a>
+                    <?= Html::a('<i class="fa fa-cart-plus fa-fw"></i> ' . 'Pengeluaran', ['/spending/spend-report']); ?>
                 </li>
                 <li>
-                    <?= Html::a('<i class="fa fa-exchange fa-fw"></i> ' . 'Untung Rugi', ['/category']); ?>
+                    <?= Html::a('<i class="fa fa-exchange fa-fw"></i> ' . 'Untung Rugi', ['/site/profit-loss']); ?>
                 </li>
             </ul>
         </div>

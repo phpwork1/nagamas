@@ -2,10 +2,8 @@
 
 namespace app\models;
 
-use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Spending;
 
 /**
  * SpendingSearch represents the model behind the search form of `app\models\Spending`.
@@ -18,7 +16,7 @@ class SpendingSearch extends Spending
     public function rules()
     {
         return [
-            [['id', 'created_by', 'created_at', 'updated_by', 'updated_at'], 'integer'],
+            [['id'], 'integer'],
             [['s_date'], 'safe'],
         ];
     }
@@ -61,10 +59,6 @@ class SpendingSearch extends Spending
         $query->andFilterWhere([
             'id' => $this->id,
             's_date' => $this->s_date,
-            'created_by' => $this->created_by,
-            'created_at' => $this->created_at,
-            'updated_by' => $this->updated_by,
-            'updated_at' => $this->updated_at,
         ]);
 
         return $dataProvider;

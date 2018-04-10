@@ -51,6 +51,10 @@ class AppLabels
     const CLEAN = 'Bersih';
     const LABOR = 'Buruh';
     const HISTORY = 'Riwayat';
+    const ALL = 'Semua';
+    const PROFIT_LOSS = 'Untung Rugi';
+    const PROFIT = 'Keuntungan';
+    const DESCRIPTION = 'Keterangan';
 
     //BUYER
     const BUYER_LIST = 'Daftar Pembeli';
@@ -63,4 +67,8 @@ class AppLabels
 
     //FACTORY REPORT
     const FACTORY_REPORT = 'Laporan Pabrik';
+
+    //SPENDING
+    const SPENDING = 'Pengeluaran';
+    const SPENDING_REPORT = 'Laporan Pengeluaran';
 }

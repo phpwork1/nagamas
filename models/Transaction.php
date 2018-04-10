@@ -23,6 +23,8 @@ use Yii;
 class Transaction extends AppModel
 {
     public $buyer_name;
+    public $total;
+
     /**
      * @inheritdoc
      */
@@ -56,6 +58,7 @@ class Transaction extends AppModel
             'buyer_id' => AppLabels::BUYER,
             't_date' => AppLabels::DATE,
             'buyer_name' => sprintf("%s %s", AppLabels::NAME, AppLabels::BUYER),
+            'total' => sprintf("%s %s", AppLabels::VALUE, AppLabels::DIRTY),
         ];
     }
 
@@ -75,25 +78,62 @@ class Transaction extends AppModel
         return $this->hasMany(TransactionDetail::className(), ['transaction_id' => 'id']);
     }
 
-    public function getTransactionDetailsByType($type){
+    public function getTotalTransaction(){
+        $total = 0;
+        foreach($this->transactionDetails as $key => $transaction){
+            $total += $transaction->total;
+        }
+        return $total;
+    }
+
+    public function getTransactionDetailsByType($type)
+    {
         return TransactionDetail::find()->where(['transaction_id' => $this->id, 'td_type' => $type])->all();
     }
 
-    public static function getTotalWeightByMonthYear($month, $year){
+    public static function getTotalWeightByMonthYear($buyer, $month, $year)
+    {
         $totalWeight = 0;
-        $allTransaction = Transaction::findBySql("SELECT * FROM transaction where EXTRACT(MONTH FROM t_date) = $month AND EXTRACT(YEAR FROM t_date) = $year")->all();
-        foreach($allTransaction as $key => $transaction){
-            foreach($transaction->transactionDetails as $keyDetail => $detail){
+        $allTransaction = Transaction::findBySql("SELECT * FROM transaction where EXTRACT(MONTH FROM t_date) = $month AND EXTRACT(YEAR FROM t_date) = $year AND buyer_id = $buyer")->all();
+        if (!empty($allTransaction)) {
+            foreach ($allTransaction as $key => $transaction) {
+                foreach ($transaction->transactionDetails as $keyDetail => $detail) {
+                    $totalWeight += $detail->td_rubber_weight;
+                }
+            }
+        }
+        return $totalWeight;
+    }
+
+    public static function getTotalWeightByDate($buyer, $date)
+    {
+        $totalWeight = 0;
+        $transaction = Transaction::find()->where(['buyer_id' => $buyer, 't_date' => $date])->one();
+        if (!empty($transaction)) {
+            foreach ($transaction->transactionDetails as $keyDetail => $detail) {
                 $totalWeight += $detail->td_rubber_weight;
             }
         }
         return $totalWeight;
     }
 
-    public function beforeSave($insert) {
+    public static function getTotalCleanByDate($buyer, $date)
+    {
+        $totalClean = 0;
+        $transaction = Transaction::find()->where(['buyer_id' => $buyer, 't_date' => $date])->one();
+        if (!empty($transaction)) {
+            foreach ($transaction->transactionDetails as $keyDetail => $detail) {
+                $totalClean += $detail->total;
+            }
+        }
+        return $totalClean*(AppConstants::DEFAULT_AFTER_PPH/100);
+    }
+
+    public function beforeSave($insert)
+    {
         parent::beforeSave($insert);
 
-        if(!$this->t_date == '') {
+        if (!$this->t_date == '') {
             $this->t_date = Yii::$app->formatter->asDate($this->t_date, AppConstants::FORMAT_DB_DATE_PHP);
         }
 
@@ -105,8 +145,9 @@ class Transaction extends AppModel
         parent::afterFind();
 
         $this->buyer_name = $this->buyer->b_name;
+        $this->total = $this->getTotalTransaction();
 
-        if(!$this->t_date == '') {
+        if (!$this->t_date == '') {
             $this->t_date = Yii::$app->formatter->asDate($this->t_date, AppConstants::FORMAT_DATE_PHP_SHOW_MONTH);
         }
     }

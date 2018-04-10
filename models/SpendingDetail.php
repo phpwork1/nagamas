@@ -2,7 +2,8 @@
 
 namespace app\models;
 
-use Yii;
+use app\components\base\AppConstants;
+use app\components\base\AppLabels;
 
 /**
  * This is the model class for table "spending_detail".
@@ -21,8 +22,9 @@ use Yii;
  *
  * @property Spending $spending
  */
-class SpendingDetail extends \yii\db\ActiveRecord
+class SpendingDetail extends AppModel
 {
+    public $total;
     /**
      * @inheritdoc
      */
@@ -37,8 +39,8 @@ class SpendingDetail extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['spending_id', 'sd_name', 'created_by', 'created_at', 'updated_by', 'updated_at'], 'required'],
-            [['spending_id', 'sd_spend_value', 'sd_labor', 'sd_other', 'created_by', 'created_at', 'updated_by', 'updated_at'], 'integer'],
+            [['spending_id', 'sd_name'], 'required', 'message' => AppConstants::VALIDATE_REQUIRED],
+            [['spending_id', 'sd_spend_value', 'sd_labor', 'sd_other'], 'integer', 'message' => AppConstants::VALIDATE_INTEGER],
             [['sd_name'], 'string', 'max' => 20],
             [['sd_ref'], 'string', 'max' => 255],
             [['spending_id'], 'exist', 'skipOnError' => true, 'targetClass' => Spending::className(), 'targetAttribute' => ['spending_id' => 'id']],
@@ -52,16 +54,12 @@ class SpendingDetail extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'spending_id' => 'Spending ID',
-            'sd_name' => 'Sd Name',
-            'sd_spend_value' => 'Sd Spend Value',
-            'sd_labor' => 'Sd Labor',
-            'sd_other' => 'Sd Other',
-            'sd_ref' => 'Sd Ref',
-            'created_by' => 'Created By',
-            'created_at' => 'Created At',
-            'updated_by' => 'Updated By',
-            'updated_at' => 'Updated At',
+            'spending_id' => AppLabels::SPENDING,
+            'sd_name' => AppLabels::NAME,
+            'sd_spend_value' => AppLabels::PURCHASE,
+            'sd_labor' => AppLabels::LABOR,
+            'sd_other' => AppLabels::OTHER,
+            'sd_ref' => AppLabels::DESCRIPTION,
         ];
     }
 
@@ -71,5 +69,12 @@ class SpendingDetail extends \yii\db\ActiveRecord
     public function getSpending()
     {
         return $this->hasOne(Spending::className(), ['id' => 'spending_id']);
+    }
+
+    public function afterFind()
+    {
+        parent::afterFind();
+
+        $this->total = $this->sd_spend_value + $this->sd_labor + $this->sd_other;
     }
 }

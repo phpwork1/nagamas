@@ -1,12 +1,11 @@
 <?php
 
-use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use yii\jui\DatePicker;
 use app\components\base\AppLabels;
 use app\components\base\AppConstants;
 use app\assets\ReportAsset;
 use kartik\select2\Select2;
+use app\models\Buyer;
 
 ReportAsset::register($this);
 
@@ -14,6 +13,7 @@ ReportAsset::register($this);
 /* @var $model \app\models\Transaction */
 /* @var $month int */
 /* @var $year int */
+/* @var $buyer int */
 /* @var $form yii\widgets\ActiveForm */
 
 $this->title = sprintf('%s %s', AppLabels::REPORT, AppLabels::SELL);
@@ -24,7 +24,16 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <div class="col-md-2 col-md-offset-8">
+    <div class="col-md-2 col-md-offset-6">
+        <?= Select2::widget([
+            'name' => 'buyer',
+            'value' => $buyer,
+            'data' => Buyer::map(),
+            'options' => ['id' => 'buyer-select', 'class' => 'input-lg form-control']
+        ]); ?>
+    </div>
+
+    <div class="col-md-2">
         <?= Select2::widget([
             'name' => 'month',
             'value' => $month,
@@ -57,7 +66,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             <?= sprintf("%s %s untuk %s %s", AppLabels::TOTAL, AppLabels::WEIGHT, AppConstants::$month[$month], $year); ?>
                         </th>
                         <td class="text-right yellow" width="40%">
-                            <?= Yii::$app->formatter->asInteger(\app\models\Transaction::getTotalWeightByMonthYear($month, $year)) ?>
+                            <?= Yii::$app->formatter->asInteger(\app\models\Transaction::getTotalWeightByMonthYear($buyer, $month, $year)) ?>
                         </td>
                     </tr>
                     </tbody>
@@ -102,8 +111,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <td class="text-center"><?= $transaction->buyer->b_name ?></td>
                                 <td class="text-center yellow"><?= Yii::$app->formatter->asInteger($weightTotal) ?> </td>
                                 <td class="text-center"><?= Yii::$app->formatter->asCurrency($priceTotal) ?> </td>
-                                <td class="text-center"><?= Yii::$app->formatter->asCurrency($priceTotal * 0.005) ?></td>
-                                <td class="text-center yellow"><?= Yii::$app->formatter->asCurrency($priceTotal * 0.995) ?></td>
+                                <td class="text-center"><?= Yii::$app->formatter->asCurrency($priceTotal * AppConstants::DEFAULT_PPH/100) ?></td>
+                                <td class="text-center yellow"><?= Yii::$app->formatter->asCurrency($priceTotal * AppConstants::DEFAULT_AFTER_PPH/100) ?></td>
                                 <td class="text-center"><?= $t ?></td>
                                 <td class="text-center"><?= Yii::$app->formatter->asCurrency(($priceTotal != 0 && $weightTotal != 0) ? $priceTotal / $weightTotal : 0) ?></td>
                             </tr>

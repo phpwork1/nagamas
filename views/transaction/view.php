@@ -40,6 +40,7 @@ $buttons = array_merge($actionColumn->buttons, [
                 'attributes' => [
                     'buyer_name',
                     't_date',
+                    'total:currency',
                 ],
             ]) ?>
         </div>

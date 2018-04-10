@@ -4,7 +4,6 @@ use yii\helpers\Html;
 use app\components\base\AppLabels;
 use yii\grid\GridView;
 use yii\widgets\DetailView;
-use app\models\Seller;
 /* @var $this yii\web\View */
 /* @var $model app\models\Purchase */
 /* @var $searchModel app\models\PurchaseDetailSearch */
@@ -32,6 +31,8 @@ $buttons = array_merge($actionColumn->buttons, [
         return yii\helpers\Html::a('<i class="glyphicon glyphicon-remove"></i>', ['delete-detail', 'id' => $model->id], ['class' => 'btn-sm btn-danger', 'title' => Yii::t('yii', 'Hapus data item ini'), 'data' => ['method' => 'post', 'confirm' => 'Yakin ingin menghapus data ini?']]);
     },
 ]);
+
+//$model->updateTotal();
 ?>
 <div class="purchase-view">
     <div class="row">
@@ -43,7 +44,9 @@ $buttons = array_merge($actionColumn->buttons, [
                     [
                             'attribute' => 'seller_id',
                             'value' => $model->seller->s_name,
-                    ]
+                    ],
+                    'total_dirty:currency',
+                    'total_clean:currency',
                 ],
             ]) ?>
         </div>

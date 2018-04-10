@@ -148,12 +148,16 @@ class TransactionController extends Controller
 
     public function actionSellReport()
     {
-
+        $buyer = AppConstants::DEFAULT_BUYER;
         $month = Yii::$app->formatter->asDate(time(), 'M');
         $year = Yii::$app->formatter->asDate(time(), 'Y');
 
         if (Yii::$app->request->isPost) {
             $requestData = Yii::$app->request->post();
+            if (isset($requestData['buyer'])) {
+                $buyer = $requestData['buyer'];
+            }
+
             if (isset($requestData['month'])) {
                 $month = $requestData['month'];
             }
@@ -162,13 +166,12 @@ class TransactionController extends Controller
                 $year = $requestData['year'];
             }
         }
-        $model = Transaction::findBySql("SELECT * FROM transaction where EXTRACT(MONTH FROM t_date) = $month AND EXTRACT(YEAR FROM t_date) = $year")->all();
-
-
+        $model = Transaction::findBySql("SELECT * FROM transaction where EXTRACT(MONTH FROM t_date) = $month AND EXTRACT(YEAR FROM t_date) = $year AND buyer_id = $buyer ORDER BY t_date DESC;")->all();
         return $this->render('sell-report', [
             'model' => $model,
             'month' => $month,
             'year' => $year,
+            'buyer' => $buyer,
         ]);
     }
 
