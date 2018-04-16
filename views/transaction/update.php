@@ -9,7 +9,7 @@ use app\components\base\AppLabels;
 
 $this->title = sprintf("%s %s", AppLabels::UPDATE, AppLabels::TRANSACTION);
 $this->params['breadcrumbs'][] = ['label' => AppLabels::FACTORY_REPORT, 'url' => ['index']];
-$this->params['breadcrumbs'][] = AppLabels::UPDATE;
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="transaction-update">
 

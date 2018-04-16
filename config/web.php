@@ -70,8 +70,8 @@ $config = [
             'timeFormat' => 'php:H:i:s',
             'currencyCode' => 'IDR',
             'numberFormatterOptions' => [
-                NumberFormatter::MIN_FRACTION_DIGITS => 2,
-                NumberFormatter::MAX_FRACTION_DIGITS => 2
+                NumberFormatter::MIN_FRACTION_DIGITS => 0,
+                NumberFormatter::MAX_FRACTION_DIGITS => 0
             ],
 //            'decimalSeparator' => ',',
 //            'thousandSeparator' => '.',

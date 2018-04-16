@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Purchase;
 use app\models\TransactionDetail;
 use Yii;
 use yii\filters\AccessControl;
@@ -10,8 +11,8 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\SignupForm;
-use app\models\Transaction;
 use app\components\base\AppConstants;
+use app\models\PurchaseDetail;
 
 class SiteController extends Controller
 {
@@ -34,7 +35,7 @@ class SiteController extends Controller
                         'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['logout', 'index'],
+                        'actions' => ['logout', 'index', 'profit-loss'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -73,14 +74,36 @@ class SiteController extends Controller
     public function actionIndex()
     {
         $model = new TransactionDetail();
+        $modelPurchase = new PurchaseDetail();
 
-        if ($model->load(Yii::$app->request->post()) && $model->saveTransactional()) {
-            Yii::$app->session->setFlash('success', AppConstants::MESSAGE_SAVE_SUCCESS);
-            $model = new TransactionDetail();
+        if(Yii::$app->request->isPost){
+            $requestData = Yii::$app->request->post();
+            if($requestData['action'] == AppConstants::ACTION_PURCHASE){
+                if ($modelPurchase->load(Yii::$app->request->post()) && $modelPurchase->saveTransactional()) {
+                    Yii::$app->session->setFlash('success', AppConstants::MESSAGE_SAVE_SUCCESS);
+                    $modelPurchase = new PurchaseDetail();
+                }
+            }else if($requestData['action'] == AppConstants::ACTION_TRANSACTION){
+                if ($model->load(Yii::$app->request->post()) && $model->saveTransactional()) {
+                    Yii::$app->session->setFlash('success', AppConstants::MESSAGE_SAVE_SUCCESS);
+                    $model = new TransactionDetail();
+                }
+            }
         }
+
+        $month = Yii::$app->formatter->asDate(time(), 'M');
+        $year = Yii::$app->formatter->asDate(time(), 'Y');
+        $lastPurchases = Purchase::getLastPurchases();
+        $totalToday = Purchase::getTotalToday();
+        $totalMonth = Purchase::getTotalWeightByMonthYear($month, $year);
+
 
         return $this->render('index', [
             'model' => $model,
+            'totalToday' => $totalToday,
+            'totalMonth' => $totalMonth,
+            'lastPurchases' => $lastPurchases,
+            'modelPurchase' => $modelPurchase,
         ]);
     }
 
@@ -112,6 +135,33 @@ class SiteController extends Controller
                 'model' => $model,
             ]);
         }
+    }
+
+    public function actionProfitLoss(){
+        $buyer = AppConstants::DEFAULT_BUYER;
+        $month = Yii::$app->formatter->asDate(time(), 'M');
+        $year = Yii::$app->formatter->asDate(time(), 'Y');
+
+        if (Yii::$app->request->isPost) {
+            $requestData = Yii::$app->request->post();
+            if (isset($requestData['buyer'])) {
+                $buyer = $requestData['buyer'];
+            }
+
+            if (isset($requestData['month'])) {
+                $month = $requestData['month'];
+            }
+
+            if (isset($requestData['year'])) {
+                $year = $requestData['year'];
+            }
+        }
+
+        return $this->render('profit-loss', [
+            'month' => $month,
+            'year' => $year,
+            'buyer' => $buyer,
+        ]);
     }
 
     /**

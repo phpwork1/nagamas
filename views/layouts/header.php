@@ -29,7 +29,7 @@ use app\components\base\AppLabels;
     </ul>
 
     <ul class="nav navbar-top-links navbar-right">
-        <li class="navbar-text big-padding">
+        <li class="navbar-text">
             Hari ini : <?= Yii::$app->formatter->asDate(time(), \app\components\base\AppConstants::FORMAT_DATE_PHP_SHOW_MONTH); ?>
         </li>
         <!-- /.dropdown -->
@@ -63,13 +63,13 @@ use app\components\base\AppLabels;
                     <?= Html::a('<i class="fa fa-dollar fa-fw"></i> ' . 'Penjualan', ['/transaction/sell-report']); ?>
                 </li>
                 <li>
-                    <?= Html::a('<i class="fa fa-cart-plus fa-fw"></i> ' . 'Pembelian', ['/location']); ?>
+                    <?= Html::a('<i class="fa fa-cart-plus fa-fw"></i> ' . 'Pembelian', ['/purchase/buy-report']); ?>
                 </li>
                 <li>
-                    <a href="<?= Yii::$app->getHomeUrl() ?>"><i class="fa fa-minus fa-fw"></i> Pengeluaran</a>
+                    <?= Html::a('<i class="fa fa-cart-plus fa-fw"></i> ' . 'Pengeluaran', ['/spending/spend-report']); ?>
                 </li>
                 <li>
-                    <?= Html::a('<i class="fa fa-exchange fa-fw"></i> ' . 'Untung Rugi', ['/category']); ?>
+                    <?= Html::a('<i class="fa fa-exchange fa-fw"></i> ' . 'Untung Rugi', ['/site/profit-loss']); ?>
                 </li>
             </ul>
         </div>

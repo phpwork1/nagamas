@@ -1,6 +1,7 @@
 html,
 body {
     height: 100%;
+    margin:0;
 }
 
 .wrap {
@@ -15,11 +16,12 @@ body {
 }
 
 .footer {
-    height: 60px;
-    background-color: #f5f5f5;
-    border-top: 1px solid #ddd;
-    padding-top: 20px;
-    bottom:0;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #f8f8f8;
+    text-align: center;
 }
 
 .jumbotron {
@@ -171,10 +173,19 @@ a.desc:after {
     padding-left:500px;
 }
 
-.footer {
-    position: relative;
-    margin-top: -1px; /* negative value of footer height */
-    height: 1px;
-    clear:both;
-    padding-top:20px;
+.yellow{
+    background:yellow;
+}
+
+.red-font{
+    color:red;
+}
+
+.transparent {
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
 }

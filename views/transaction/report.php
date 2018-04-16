@@ -6,6 +6,7 @@ use yii\jui\DatePicker;
 use app\components\base\AppLabels;
 use app\components\base\AppConstants;
 use app\assets\ReportAsset;
+use kartik\select2\Select2;
 
 ReportAsset::register($this);
 
@@ -24,11 +25,21 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php $form = ActiveForm::begin(); ?>
 
     <div class="col-md-2 col-md-offset-8">
-        <?= Html::dropDownList('month', null, AppConstants::$month, ['id' => 'month-select', 'class' => 'input-lg form-control', 'options' => [$month => ['Selected' => true]]]) ?>
+        <?= Select2::widget([
+            'name' => 'month',
+            'value' => $month,
+            'data' => AppConstants::$month,
+            'options' => ['id' => 'month-select', 'class' => 'input-lg form-control']
+        ]); ?>
     </div>
 
     <div class="col-md-2">
-        <?= Html::dropDownList('year', null, AppConstants::$year, ['id' => 'year-select', 'class' => 'input-lg form-control', 'options' => [$year => ['Selected' => true]]]) ?>
+        <?= Select2::widget([
+            'name' => 'year',
+            'value' => $year,
+            'data' => AppConstants::$year,
+            'options' => ['id' => 'year-select', 'class' => 'input-lg form-control']
+        ]); ?>
     </div>
 
     <div class="col-md-12">
@@ -88,7 +99,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <td></td>
                                 <td></td>
                                 <td class="text-center"><?= AppLabels::TOTAL ?> </td>
-                                <td class="text-center"><?= Yii::$app->formatter->asCurrency($priceTotal * 0.995) ?></td>
+                                <td class="text-center yellow"><?= Yii::$app->formatter->asCurrency($priceTotal * 0.995) ?></td>
                             </tr>
                         <?php endif; ?>
                         </tbody>

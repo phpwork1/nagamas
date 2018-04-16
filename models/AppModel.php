@@ -12,8 +12,8 @@ namespace app\models;
 
 use yii\behaviors\TimestampBehavior;
 use yii\behaviors\BlameableBehavior;
-use app\assets\AppConstants;
 use Yii;
+use app\components\base\AppConstants;
 
 class AppModel extends \yii\db\ActiveRecord
 {

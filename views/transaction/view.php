@@ -11,7 +11,7 @@ use yii\widgets\DetailView;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = sprintf("%s %s", AppLabels::VIEW, AppLabels::TRANSACTION);
-$this->params['breadcrumbs'][] = ['label' => AppLabels::GROUP, 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => AppLabels::FACTORY_REPORT, 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['buttons'] = [
     Html::a('<i class="glyphicon glyphicon-plus"></i>', ['create-detail', 'id' => $model->id, 'buyer_id' => $model->buyer_id], [
@@ -40,6 +40,7 @@ $buttons = array_merge($actionColumn->buttons, [
                 'attributes' => [
                     'buyer_name',
                     't_date',
+                    'total:currency',
                 ],
             ]) ?>
         </div>

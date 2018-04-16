@@ -9,6 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use app\components\base\AppConstants;
+use app\models\Purchase;
 
 /**
  * SellerController implements the CRUD actions for Seller model.
@@ -53,8 +54,28 @@ class SellerController extends Controller
      */
     public function actionView($id)
     {
+        $model = $this->findModel($id);
+
+        $month = Yii::$app->formatter->asDate(time(), 'M');
+        $year = Yii::$app->formatter->asDate(time(), 'Y');
+
+        if (Yii::$app->request->isPost) {
+            $requestData = Yii::$app->request->post();
+            if (isset($requestData['month'])) {
+                $month = $requestData['month'];
+            }
+
+            if (isset($requestData['year'])) {
+                $year = $requestData['year'];
+            }
+        }
+        $purchases = Purchase::findBySql("SELECT * FROM purchase where EXTRACT(MONTH FROM p_date) = $month AND EXTRACT(YEAR FROM p_date) = $year AND seller_id = $model->id")->all();
+
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
+            'month' => $month,
+            'year' => $year,
+            'purchases' => $purchases,
         ]);
     }
 

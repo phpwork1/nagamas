@@ -24,7 +24,7 @@ class AppLabels
     const ADDRESS = 'Alamat';
     const PHONE = 'No. Telpon';
     const DATE = 'Tanggal';
-    const WEIGHT = 'Berat';
+    const WEIGHT = 'Berat (Kg)';
     const PRICE = 'Harga';
     const TRANSACTION = 'Transaksi';
     const GROUP = 'Partai';
@@ -43,6 +43,18 @@ class AppLabels
     const DIRTY = 'Kotor';
     const PPH = 'PPh';
     const GLOBAL_WORD = 'Global';
+    const STAMP = 'Materai';
+    const COMMISSION = 'Komisi';
+    const PURCHASE = 'Pembelian';
+    const YEAR = 'Tahun';
+    const OTHER = 'Lain-Lain';
+    const CLEAN = 'Bersih';
+    const LABOR = 'Buruh';
+    const HISTORY = 'Riwayat';
+    const ALL = 'Semua';
+    const PROFIT_LOSS = 'Untung Rugi';
+    const PROFIT = 'Keuntungan';
+    const DESCRIPTION = 'Keterangan';
 
     //BUYER
     const BUYER_LIST = 'Daftar Pembeli';
@@ -51,7 +63,12 @@ class AppLabels
     //SELLER
     const SELLER = 'Penjual';
     const SELLER_LIST = 'Daftar Penjual';
+    const BUY_REPORT = 'Laporan Pembelian';
 
     //FACTORY REPORT
     const FACTORY_REPORT = 'Laporan Pabrik';
+
+    //SPENDING
+    const SPENDING = 'Pengeluaran';
+    const SPENDING_REPORT = 'Laporan Pengeluaran';
 }

@@ -6,4 +6,10 @@ $(document).ready( function () {
     $('#year-select').change(function(){
         this.form.submit();
     });
+
+    $('#buyer-select').change(function(){
+        this.form.submit();
+    });
+
+
 } );

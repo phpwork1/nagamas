@@ -1,6 +1,6 @@
 <?php
 
-use app\widgets\Alert;
+use yii2mod\alert\Alert;
 
 //use common\widgets\Alert;
 /* @var $content string */
