@@ -47,7 +47,7 @@ class Purchase extends AppModel
     {
         return [
             [['seller_id', 'p_date', 'p_commission', 'p_stamp'], 'required', 'message' => AppConstants::VALIDATE_REQUIRED],
-            [['p_stamp', 'p_fresh', 'p_transfer'], 'integer', 'message' => AppConstants::VALIDATE_INTEGER],
+            [['p_stamp', 'p_fresh', 'p_transfer', 'p_other'], 'integer', 'message' => AppConstants::VALIDATE_INTEGER],
             [['p_date'], 'safe'],
             [['p_commission'], 'string', 'max' => 20],
             [['seller_id'], 'exist', 'skipOnError' => true, 'targetClass' => Seller::className(), 'targetAttribute' => ['seller_id' => 'id']],
