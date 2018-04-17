@@ -71,6 +71,17 @@ use app\components\base\AppLabels;
                 <li>
                     <?= Html::a('<i class="fa fa-exchange fa-fw"></i> ' . 'Untung Rugi', ['/site/profit-loss']); ?>
                 </li>
+                <li>
+                    <?= Html::a('<i class="fa fa-bank fa-fw"></i> ' . 'Sawit<span class="fa arrow"></span>', '#'); ?>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <?= Html::a('<i class="fa fa-book fa-fw"></i> ' . 'BAM', ['/bam']); ?>
+                        </li>
+                        <li>
+                            <?= Html::a('<i class="fa fa-book fa-fw"></i> ' . 'PAL', ['/pal']); ?>
+                        </li>
+                    </ul>
+                </li>
             </ul>
         </div>
         <!-- /.sidebar-collapse -->
