@@ -43,6 +43,13 @@ use app\components\base\AppLabels;
                 <li><?= Html::a('<i class="fa fa-male fa-fw"></i> ' . AppLabels::SELLER, ['/seller']); ?>
                 </li>
                 <li class="divider"></li>
+                <li><?= Html::a('<i class="fa fa-car fa-fw"></i> ' . AppLabels::CAR, ['/car']); ?>
+                </li>
+                <li><?= Html::a('<i class="fa fa-male fa-fw"></i> ' . AppLabels::DRIVER, ['/driver']); ?>
+                </li>
+                <li><?= Html::a('<i class="fa fa-map fa-fw"></i> ' . AppLabels::AREA, ['/area']); ?>
+                </li>
+                <li class="divider"></li>
                 <li><?= Html::a('<i class="fa fa-sign-out fa-fw"></i> ' . 'Logout', ['site/logout'], ['data' => ['method' => 'post']]); ?></li>
             </ul>
             <!-- /.dropdown-user -->
@@ -75,10 +82,13 @@ use app\components\base\AppLabels;
                     <?= Html::a('<i class="fa fa-bank fa-fw"></i> ' . 'Sawit<span class="fa arrow"></span>', '#'); ?>
                     <ul class="nav nav-second-level">
                         <li>
-                            <?= Html::a('<i class="fa fa-book fa-fw"></i> ' . 'BAM', ['/bam']); ?>
+                            <?= Html::a('<i class="fa fa-book fa-fw"></i> ' . 'Harga Sawit', ['/palm']); ?>
                         </li>
                         <li>
-                            <?= Html::a('<i class="fa fa-book fa-fw"></i> ' . 'PAL', ['/pal']); ?>
+                            <?= Html::a('<i class="fa fa-book fa-fw"></i> ' . 'BAM', ['/bam/report']); ?>
+                        </li>
+                        <li>
+                            <?= Html::a('<i class="fa fa-book fa-fw"></i> ' . 'PAL', ['/pal/report']); ?>
                         </li>
                     </ul>
                 </li>

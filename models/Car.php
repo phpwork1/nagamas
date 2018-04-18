@@ -2,7 +2,8 @@
 
 namespace app\models;
 
-use Yii;
+use app\components\base\AppLabels;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "car".
@@ -13,8 +14,12 @@ use Yii;
  * @property int $created_at
  * @property int $updated_by
  * @property int $updated_at
+ *
+ * @property Bam[] $bams
+ * @property Pal[] $pals
+ *
  */
-class Car extends \yii\db\ActiveRecord
+class Car extends AppModel
 {
     /**
      * @inheritdoc
@@ -30,10 +35,37 @@ class Car extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['created_by', 'created_at', 'updated_by', 'updated_at'], 'required'],
-            [['created_by', 'created_at', 'updated_by', 'updated_at'], 'integer'],
             [['c_name'], 'string', 'max' => 100],
         ];
+    }
+
+    /**
+     * Return model objects
+     * @param string $value default to 'name'
+     * @param string $conditions default to null
+     * @return \yii\db\ActiveRecord[]
+     */
+    public static function getAll($value = 'c_name', $conditions = null) {
+        $query = Car::find()->orderBy([$value => SORT_ASC]);
+        if (!empty($conditions)) {
+            $query->andWhere($conditions);
+        }
+        return $query->all();
+    }
+
+    /**
+     * Return array of key => value for dropdown menu
+     * @param string $key default to 'id'
+     * @param string $value default to 'name'
+     * @param string $conditions default to null
+     * @return array
+     */
+    public static function map($key = 'id', $value = 'c_name', $conditions = null) {
+        $key = empty($key) ? 'id' : $key;
+        $value = empty($value) ? 'name' : $value;
+        $map = ArrayHelper::map(self::getAll($value, $conditions), $key, $value);
+
+        return $map;
     }
 
     /**
@@ -43,11 +75,23 @@ class Car extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'c_name' => 'C Name',
-            'created_by' => 'Created By',
-            'created_at' => 'Created At',
-            'updated_by' => 'Updated By',
-            'updated_at' => 'Updated At',
+            'c_name' => sprintf("%s %s", AppLabels::PLAT, AppLabels::CAR),
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getBams()
+    {
+        return $this->hasMany(Bam::className(), ['car_id' => 'id'])->orderBy(['b_date' => SORT_DESC]);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPals()
+    {
+        return $this->hasMany(Pal::className(), ['car_id' => 'id'])->orderBy(['p_date' => SORT_DESC]);
     }
 }

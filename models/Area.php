@@ -2,14 +2,16 @@
 
 namespace app\models;
 
+use app\components\base\AppConstants;
 use app\components\base\AppLabels;
 use yii\helpers\ArrayHelper;
 
+
 /**
- * This is the model class for table "driver".
+ * This is the model class for table "area".
  *
  * @property int $id
- * @property string $d_name
+ * @property string $a_name
  * @property int $created_by
  * @property int $created_at
  * @property int $updated_by
@@ -18,14 +20,14 @@ use yii\helpers\ArrayHelper;
  * @property Bam[] $bams
  * @property Pal[] $pals
  */
-class Driver extends AppModel
+class Area extends AppModel
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'driver';
+        return 'area';
     }
 
     /**
@@ -34,7 +36,19 @@ class Driver extends AppModel
     public function rules()
     {
         return [
-            [['d_name'], 'string', 'max' => 100],
+            [['a_name'], 'required', 'message' => AppConstants::VALIDATE_REQUIRED],
+            [['a_name'], 'string', 'max' => 100],
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'ID',
+            'a_name' => sprintf("%s %s", AppLabels::NAME, AppLabels::AREA),
         ];
     }
 
@@ -44,8 +58,8 @@ class Driver extends AppModel
      * @param string $conditions default to null
      * @return \yii\db\ActiveRecord[]
      */
-    public static function getAll($value = 'd_name', $conditions = null) {
-        $query = Driver::find()->orderBy([$value => SORT_ASC]);
+    public static function getAll($value = 'a_name', $conditions = null) {
+        $query = Area::find()->orderBy([$value => SORT_ASC]);
         if (!empty($conditions)) {
             $query->andWhere($conditions);
         }
@@ -59,7 +73,7 @@ class Driver extends AppModel
      * @param string $conditions default to null
      * @return array
      */
-    public static function map($key = 'id', $value = 'd_name', $conditions = null) {
+    public static function map($key = 'id', $value = 'a_name', $conditions = null) {
         $key = empty($key) ? 'id' : $key;
         $value = empty($value) ? 'name' : $value;
         $map = ArrayHelper::map(self::getAll($value, $conditions), $key, $value);
@@ -68,22 +82,11 @@ class Driver extends AppModel
     }
 
     /**
-     * @inheritdoc
-     */
-    public function attributeLabels()
-    {
-        return [
-            'id' => 'ID',
-            'd_name' => sprintf("%s %s", AppLabels::NAME, AppLabels::DRIVER),
-        ];
-    }
-
-    /**
      * @return \yii\db\ActiveQuery
      */
     public function getBams()
     {
-        return $this->hasMany(Bam::className(), ['driver_id' => 'id'])->orderBy(['b_date' => SORT_DESC]);
+        return $this->hasMany(Bam::className(), ['area_id' => 'id']);
     }
 
     /**
@@ -91,6 +94,6 @@ class Driver extends AppModel
      */
     public function getPals()
     {
-        return $this->hasMany(Pal::className(), ['driver_id' => 'id'])->orderBy(['p_date' => SORT_DESC]);
+        return $this->hasMany(Pal::className(), ['area_id' => 'id']);
     }
 }

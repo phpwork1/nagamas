@@ -31,6 +31,9 @@ class AppConstants
     const DEFAULT_PPH = 0.5;
     const DEFAULT_AFTER_PPH = 99.5;
     const DEFAULT_STAMP_PRICE = 6000;
+    const DEFAULT_PALM_TAX = 0.25;
+    const DEFAULT_AFTER_PALM_TAX = 99.75;
+    const DEFAULT_PALM_VILLAGE_FEE = 12;
 
     //MESSAGE
     const ERR_INTEGRITY_CONSTRAINT_VIOLATION = 'Database Integrity Violation';
@@ -66,6 +69,7 @@ class AppConstants
 
     //DATE FORMAT
     const FORMAT_DATE_PHP_SHOW_MONTH = 'php:d-m-Y';
+    const FORMAT_DATE_USER_SHOW_MONTH = 'php:d M Y';
     const FORMAT_DB_DATE_PHP = 'php:Y-m-d';
 
     //FORM TEMPLATE
@@ -171,5 +175,14 @@ class AppConstants
 		'0' => 'Non - Transfer',
 		'1' => 'Transfer',
 	];
+
+	public static $factory = [
+        'bam' => 'BAM',
+        'pal' => 'PAL',
+    ];
+
+	//PALM
+    const BAM = 'bam';
+    const PAL = 'pal';
 	
 }

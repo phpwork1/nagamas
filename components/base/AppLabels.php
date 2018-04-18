@@ -55,6 +55,14 @@ class AppLabels
     const PROFIT_LOSS = 'Untung Rugi';
     const PROFIT = 'Keuntungan';
     const DESCRIPTION = 'Keterangan';
+    const CAR = 'Mobil';
+    const DRIVER = 'Supir';
+    const FACTORY = 'Pabrik';
+    const BRUTO = 'Bruto';
+    const TARRA = 'Tarra';
+    const PLAT = 'Plat';
+    const NETTO = 'Netto';
+    const AREA = 'Daerah';
 
     //BUYER
     const BUYER_LIST = 'Daftar Pembeli';
@@ -71,4 +79,25 @@ class AppLabels
     //SPENDING
     const SPENDING = 'Pengeluaran';
     const SPENDING_REPORT = 'Laporan Pengeluaran';
+
+    //DRIVER
+    const DRIVER_LIST = 'Daftar Supir';
+
+    //CAR
+    const CAR_LIST = 'Daftar Mobil';
+
+    //BAM
+    const BAM_LIST = 'Daftar Penjualan ke Pabrik BAM';
+
+    //PAL
+    const PAL_LIST = 'Daftar Penjualan ke Pabrik PAL';
+
+    //PAL
+    const PALM_LIST = 'Daftar Harga Sawit';
+
+    //PALM
+    const PALM_VILLAGE_FEE = 'Upah Bongkar + Fee Desa';
+
+    //AREA
+    const AREA_LIST = 'Daftar Daerah';
 }
