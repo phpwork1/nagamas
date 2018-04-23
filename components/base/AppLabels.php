@@ -63,6 +63,8 @@ class AppLabels
     const PLAT = 'Plat';
     const NETTO = 'Netto';
     const AREA = 'Daerah';
+    const DOWNLOAD = 'Download';
+    const EXCEL = 'Excel';
 
     //BUYER
     const BUYER_LIST = 'Daftar Pembeli';
@@ -88,11 +90,15 @@ class AppLabels
 
     //BAM
     const BAM_LIST = 'Daftar Penjualan ke Pabrik BAM';
+    const BAM = 'BAM';
 
     //PAL
     const PAL_LIST = 'Daftar Penjualan ke Pabrik PAL';
 
-    //PAL
+    //RAM
+    const RAM_LIST = 'Daftar Penjualan ke Pabrik RAM';
+
+    //PALM
     const PALM_LIST = 'Daftar Harga Sawit';
 
     //PALM

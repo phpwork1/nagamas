@@ -12,7 +12,6 @@ $this->title = $name;
     <div class="jumbotron ">
         <h1><?= $name ?></h1>
         <h2><?= $message ?></h2>
-        <p><?= $exception ?></p>
     </div>
 
 

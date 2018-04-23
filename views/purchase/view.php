@@ -13,12 +13,6 @@ $this->title = sprintf("%s %s %s", AppLabels::VIEW, AppLabels::DETAIL, AppLabels
 $this->params['breadcrumbs'][] = ['label' => AppLabels::BUY_REPORT, 'url' => ['buy-report']];
 $this->params['breadcrumbs'][] = ['label' => AppLabels::PURCHASE, 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-$this->params['buttons'] = [
-    Html::a('<i class="glyphicon glyphicon-plus"></i>', ['create-detail', 'id' => $model->id], [
-        'class' => 'btn btn-success',
-        'title' => Yii::t('app', 'Tambah Transaksi')
-    ])
-];
 $actionColumn = Yii::$container->get('yii\grid\ActionColumn');
 $buttons = array_merge($actionColumn->buttons, [
     'view' => function ($url, $model) {

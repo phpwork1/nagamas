@@ -19,6 +19,7 @@ use yii\helpers\ArrayHelper;
  *
  * @property Bam[] $bams
  * @property Pal[] $pals
+ * @property Ram[] $rams
  */
 class Area extends AppModel
 {
@@ -95,5 +96,13 @@ class Area extends AppModel
     public function getPals()
     {
         return $this->hasMany(Pal::className(), ['area_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getRams()
+    {
+        return $this->hasMany(Ram::className(), ['area_id' => 'id']);
     }
 }

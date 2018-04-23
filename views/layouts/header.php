@@ -90,6 +90,9 @@ use app\components\base\AppLabels;
                         <li>
                             <?= Html::a('<i class="fa fa-book fa-fw"></i> ' . 'PAL', ['/pal/report']); ?>
                         </li>
+                        <li>
+                            <?= Html::a('<i class="fa fa-book fa-fw"></i> ' . 'RAM', ['/ram/report']); ?>
+                        </li>
                     </ul>
                 </li>
             </ul>

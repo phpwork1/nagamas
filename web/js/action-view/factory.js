@@ -3,8 +3,10 @@ $(document).ready( function () {
         var factory = $('#factory').val();
         var priceBam = $('#bam-b_price');
         var pricePal = $('#pal-p_price');
+        var priceRam = $('#ram-r_price');
         var priceBamDisp = $('#bam-b_price-disp');
         var pricePalDisp = $('#pal-p_price-disp');
+        var priceRamDisp = $('#ram-r_price-disp');
         var baseUrl = $('#baseUrl').val();
 
         if ($(this).val() !== '') {
@@ -21,6 +23,9 @@ $(document).ready( function () {
                         }else if (factory === 'pal') {
                             pricePal.val(data['price']);
                             pricePalDisp.val(data['price']);
+                        }else if (factory === 'ram') {
+                            priceRam.val(data['price']);
+                            priceRamDisp.val(data['price']);
                         }
                     } else {
 
@@ -30,8 +35,10 @@ $(document).ready( function () {
                         }else if (factory === 'pal') {
                             pricePal.val(0);
                             pricePalDisp.val(0);
+                        }else if (factory === 'ram') {
+                            priceRam.val(0);
+                            priceRamDisp.val(0);
                         }
-
                     }
                 }
             });

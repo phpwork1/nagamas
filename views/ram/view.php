@@ -4,12 +4,13 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 use app\components\base\AppLabels;
 
-/* @var $this yii\web\View */
-/* @var $model app\models\Pal */
 
-$this->title = sprintf("%s %s %s", AppLabels::VIEW, AppLabels::DETAIL, AppLabels::PAL_LIST);
-$this->params['breadcrumbs'][] = ['label' => sprintf("%s %s", AppLabels::REPORT, AppLabels::PAL_LIST), 'url' => ['buy-report']];
-$this->params['breadcrumbs'][] = ['label' => AppLabels::PAL_LIST, 'url' => ['index']];
+/* @var $this yii\web\View */
+/* @var $model app\models\Bam */
+
+$this->title = sprintf("%s %s %s", AppLabels::VIEW, AppLabels::DETAIL, AppLabels::RAM_LIST);
+$this->params['breadcrumbs'][] = ['label' => sprintf("%s %s", AppLabels::REPORT, AppLabels::RAM_LIST), 'url' => ['buy-report']];
+$this->params['breadcrumbs'][] = ['label' => AppLabels::RAM_LIST, 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="pal-view">
@@ -31,11 +32,11 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'attribute' => 'p_bruto',
-                'value' => Yii::$app->formatter->asInteger($model->p_bruto),
+                'value' => Yii::$app->formatter->asInteger($model->r_bruto),
             ],
             [
                 'attribute' => 'p_tarra',
-                'value' => Yii::$app->formatter->asInteger($model->p_tarra),
+                'value' => Yii::$app->formatter->asInteger($model->r_tarra),
             ],
             [
                 'attribute' => 'netto',

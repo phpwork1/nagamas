@@ -11,13 +11,13 @@ use yii\bootstrap\Modal;
 ReportAsset::register($this);
 
 /* @var $this yii\web\View */
-/* @var $model \app\models\Bam */
+/* @var $model \app\models\Ram */
 /* @var $price \app\models\Palm */
 /* @var $month int */
 /* @var $year int */
 /* @var $form yii\widgets\ActiveForm */
 
-$this->title = sprintf('%s %s', AppLabels::REPORT, AppLabels::BAM_LIST);
+$this->title = sprintf('%s %s', AppLabels::REPORT, AppLabels::RAM_LIST);
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
@@ -27,14 +27,10 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php $form = ActiveForm::begin(); ?>
 
     <div class="col-md-2">
-        <?= Html::a(sprintf("%s %s", AppLabels::UPDATE, AppLabels::BAM_LIST), ['index'], ['class' => 'btn btn-info']) ?>
+        <?= Html::a(sprintf("%s %s", AppLabels::UPDATE, AppLabels::RAM_LIST), ['index'], ['class' => 'btn btn-info']) ?>
     </div>
 
-    <div class="col-md-2 col-md-offset-1">
-        <?= Html::a(sprintf("%s %s", AppLabels::DOWNLOAD, AppLabels::EXCEL), ['export'], ['class' => 'btn btn-primary']) ?>
-    </div>
-
-    <div class="col-md-2 col-md-offset-1">
+    <div class="col-md-2 col-md-offset-4">
         <?php Modal::begin([
             'id' => 'priceModal',
             'header' => '<h2>Daftar Harga ' . '</h2>',
@@ -65,7 +61,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="col-md-12">
         <div class="text-center">
-            <h3><?= sprintf("%s %s %s", AppLabels::REPORT, AppLabels::BAM_LIST, AppLabels::MONTH) ?> <?= AppConstants::$month[$month] ?>
+            <h3><?= sprintf("%s %s %s", AppLabels::REPORT, AppLabels::RAM_LIST, AppLabels::MONTH) ?> <?= AppConstants::$month[$month] ?>
                 <?= AppLabels::YEAR ?> <?= AppConstants::$year[$year] ?> </h3>
         </div>
 
@@ -94,43 +90,43 @@ $this->params['breadcrumbs'][] = $this->title;
                     </tr>
                     </thead>
                     <tbody>
-                    <?php foreach ($model as $key => $bam) :
-                        $nettoTotal += $bam->netto;
-                        $grandTotal += $bam->total;
+                    <?php foreach ($model as $key => $ram) :
+                        $nettoTotal += $ram->netto;
+                        $grandTotal += $ram->total;
                         ?>
                         <tr>
-                            <td class="text-center"><?= $date!=$bam->b_date ? $bam->b_date : '' ?></td>
+                            <td class="text-center"><?= $date!=$ram->r_date ? $ram->r_date : '' ?></td>
                             <td class="text-center"><?php Modal::begin([
-                                    'id' => 'areaModal' . $bam->area->id,
-                                    'header' => '<h2> Detail Daerah ' . $bam->area->a_name . ' </h2>',
-                                    'toggleButton' => ['label' => $bam->area->a_name, 'class' => 'btn transparent'],
+                                    'id' => 'areaModal' . $ram->area->id,
+                                    'header' => '<h2> Detail Daerah ' . $ram->area->a_name . ' </h2>',
+                                    'toggleButton' => ['label' => $ram->area->a_name, 'class' => 'btn transparent'],
                                     'size' => Modal::SIZE_LARGE,
                                 ]);
-                                echo $this->render('areaModal', ['model' => $bam->area]);
+                                echo $this->render('areaModal', ['model' => $ram->area]);
                                 Modal::end(); ?></td>
                             <td class="text-center"><?php Modal::begin([
-                                    'id' => 'driverModal' . $bam->driver->id,
-                                    'header' => '<h2> Detail Supir ' . $bam->driver->d_name . ' </h2>',
-                                    'toggleButton' => ['label' => $bam->driver->d_name, 'class' => 'btn transparent'],
+                                    'id' => 'driverModal' . $ram->driver->id,
+                                    'header' => '<h2> Detail Supir ' . $ram->driver->d_name . ' </h2>',
+                                    'toggleButton' => ['label' => $ram->driver->d_name, 'class' => 'btn transparent'],
                                     'size' => Modal::SIZE_LARGE,
                                 ]);
-                                echo $this->render('driverModal', ['model' => $bam->driver]);
+                                echo $this->render('driverModal', ['model' => $ram->driver]);
                                 Modal::end(); ?></td>
                             <td class="text-center"><?php Modal::begin([
-                                    'id' => 'carModal' . $bam->car->id,
-                                    'header' => '<h2> Detail Mobil ' . $bam->car->c_name . ' </h2>',
-                                    'toggleButton' => ['label' => $bam->car->c_name, 'class' => 'btn transparent'],
+                                    'id' => 'carModal' . $ram->car->id,
+                                    'header' => '<h2> Detail Mobil ' . $ram->car->c_name . ' </h2>',
+                                    'toggleButton' => ['label' => $ram->car->c_name, 'class' => 'btn transparent'],
                                     'size' => Modal::SIZE_LARGE,
                                 ]);
-                                echo $this->render('carModal', ['model' => $bam->car]);
+                                echo $this->render('carModal', ['model' => $ram->car]);
                                 Modal::end(); ?></td>
-                            <td class="text-center"><?= Yii::$app->formatter->asInteger($bam->b_bruto) ?></td>
-                            <td class="text-center"><?= Yii::$app->formatter->asInteger($bam->b_tarra) ?></td>
-                            <td class="text-center"><?= Yii::$app->formatter->asInteger($bam->netto) ?></td>
-                            <td class="text-center"><?= Yii::$app->formatter->asCurrency($bam->b_price) ?></td>
-                            <td class="text-center"><?= Yii::$app->formatter->asCurrency($bam->total) ?></td>
+                            <td class="text-center"><?= Yii::$app->formatter->asInteger($ram->r_bruto) ?></td>
+                            <td class="text-center"><?= Yii::$app->formatter->asInteger($ram->r_tarra) ?></td>
+                            <td class="text-center"><?= Yii::$app->formatter->asInteger($ram->netto) ?></td>
+                            <td class="text-center"><?= Yii::$app->formatter->asCurrency($ram->r_price) ?></td>
+                            <td class="text-center"><?= Yii::$app->formatter->asCurrency($ram->total) ?></td>
                         </tr>
-                    <?php $date = $bam->b_date; endforeach; ?>
+                    <?php $date = $ram->r_date; endforeach; ?>
                     <tr>
                         <td colspan="6"
                             class="text-center"><?= AppLabels::TOTAL ?> </td>

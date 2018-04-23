@@ -17,6 +17,7 @@ use yii\helpers\ArrayHelper;
  *
  * @property Bam[] $bams
  * @property Pal[] $pals
+ * @property Ram[] $rams
  */
 class Driver extends AppModel
 {
@@ -92,5 +93,13 @@ class Driver extends AppModel
     public function getPals()
     {
         return $this->hasMany(Pal::className(), ['driver_id' => 'id'])->orderBy(['p_date' => SORT_DESC]);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getRams()
+    {
+        return $this->hasMany(Ram::className(), ['driver_id' => 'id'])->orderBy(['r_date' => SORT_DESC]);
     }
 }

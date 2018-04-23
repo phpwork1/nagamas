@@ -34,7 +34,7 @@ class Palm extends AppModel
     public function rules()
     {
         return [
-            [['factory', 'p_price'], 'required', 'message' => AppConstants::VALIDATE_REQUIRED],
+            [['factory'], 'required', 'message' => AppConstants::VALIDATE_REQUIRED],
             [['p_price'], 'integer', 'message' => AppConstants::VALIDATE_INTEGER],
             [['factory'], 'string', 'max' => 20],
             [['p_date'], 'safe'],

@@ -4,12 +4,17 @@ namespace app\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
+use app\components\base\AppConstants;
+use Yii;
+use app\components\base\AppLabels;
+
 
 /**
  * BamSearch represents the model behind the search form of `app\models\Bam`.
  */
 class BamSearch extends Bam
 {
+    public $filename;
     /**
      * @inheritdoc
      */
@@ -69,5 +74,42 @@ class BamSearch extends Bam
 
 
         return $dataProvider;
+    }
+
+    public function export() {
+
+        $query = Bam::find();
+
+        // add conditions that should always apply here
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+
+        // export to excel
+
+        //main excel setup
+        $objPHPExcel = new \PHPExcel();
+        $filename = sprintf(AppConstants::REPORT_NAME_BAM, Date('dmYHis'));
+
+        //Creating sheet
+        $activeSheet = $objPHPExcel->createSheet(0);
+        $activeSheet->setTitle(AppLabels::BAM);
+
+        $objPHPExcel->removeSheetByIndex($objPHPExcel->getSheetCount() - 1);
+        $objPHPExcel->setActiveSheetIndex(0);
+
+        $objWriter = new \PHPExcel_Writer_Excel2007($objPHPExcel);
+        $objWriter->save(Yii::getAlias(AppConstants::THEME_EXCEL_EXPORT_DIR) . $filename);
+
+        $this->filename = $filename;
+
+        return true;
     }
 }
