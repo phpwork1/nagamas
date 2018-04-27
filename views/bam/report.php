@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 
     <div class="col-md-2 col-md-offset-1">
-        <?= Html::a(sprintf("%s %s", AppLabels::DOWNLOAD, AppLabels::EXCEL), ['export'], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a(sprintf("%s %s", AppLabels::DOWNLOAD, AppLabels::EXCEL), ['export', 'month' => $month, 'year' => $year], ['class' => 'btn btn-primary']) ?>
     </div>
 
     <div class="col-md-2 col-md-offset-1">

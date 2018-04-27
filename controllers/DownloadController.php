@@ -39,7 +39,6 @@ class DownloadController extends Controller {
                     unlink($event->data);
                 }, $file);
                 Yii::$app->response->sendFile($file);
-                Yii::$app->session->setFlash('success', AppConstants::ERR_DOWNLOAD_FAILED);
             } else {
                 Yii::$app->session->setFlash('danger', AppConstants::ERR_DOWNLOAD_FAILED);
             }

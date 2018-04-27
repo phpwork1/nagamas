@@ -62,6 +62,19 @@ class PalController extends Controller
         ]);
     }
 
+    public function actionExport($month, $year) {
+
+        $searchModel = new PalSearch();
+
+        if ($searchModel->export($month, $year)) {
+            return $this->redirect(['/download/excel', 'filename' => $searchModel->filename]);
+        }
+        else{
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+
+    }
+
     /**
      * Lists all Pal models.
      * @return mixed

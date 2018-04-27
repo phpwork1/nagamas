@@ -108,11 +108,11 @@ class BamController extends Controller
         ]);
     }
 
-    public function actionExport() {
+    public function actionExport($month, $year) {
 
         $searchModel = new BamSearch();
 
-        if ($searchModel->export()) {
+        if ($searchModel->export($month, $year)) {
             return $this->redirect(['/download/excel', 'filename' => $searchModel->filename]);
         }
         else{

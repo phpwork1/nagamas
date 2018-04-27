@@ -94,9 +94,11 @@ class AppLabels
 
     //PAL
     const PAL_LIST = 'Daftar Penjualan ke Pabrik PAL';
+    const PAL = 'PAL';
 
     //RAM
     const RAM_LIST = 'Daftar Penjualan ke Pabrik RAM';
+    const RAM = 'RAM';
 
     //PALM
     const PALM_LIST = 'Daftar Harga Sawit';

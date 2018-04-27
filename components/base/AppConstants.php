@@ -85,6 +85,8 @@ class AppConstants
     const THEME_EXCEL_EXPORT_DIR = '@app/web/excels/';
     const ERR_DOWNLOAD_FAILED = 'Error! Download Failed';
     const REPORT_NAME_BAM = 'report_bam_%s.xlsx';
+    const REPORT_NAME_PAL = 'report_pal_%s.xlsx';
+    const REPORT_NAME_RAM = 'report_ram_%s.xlsx';
 
 
 

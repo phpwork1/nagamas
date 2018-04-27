@@ -30,7 +30,11 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a(sprintf("%s %s", AppLabels::UPDATE, AppLabels::RAM_LIST), ['index'], ['class' => 'btn btn-info']) ?>
     </div>
 
-    <div class="col-md-2 col-md-offset-4">
+    <div class="col-md-2 col-md-offset-1">
+        <?= Html::a(sprintf("%s %s", AppLabels::DOWNLOAD, AppLabels::EXCEL), ['export', 'month' => $month, 'year' => $year], ['class' => 'btn btn-primary']) ?>
+    </div>
+
+    <div class="col-md-2 col-md-offset-1">
         <?php Modal::begin([
             'id' => 'priceModal',
             'header' => '<h2>Daftar Harga ' . '</h2>',

@@ -108,6 +108,19 @@ class RamController extends Controller
         ]);
     }
 
+    public function actionExport($month, $year) {
+
+        $searchModel = new RamSearch();
+
+        if ($searchModel->export($month, $year)) {
+            return $this->redirect(['/download/excel', 'filename' => $searchModel->filename]);
+        }
+        else{
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+
+    }
+
     /**
      * Updates an existing Ram model.
      * If update is successful, the browser will be redirected to the 'view' page.
