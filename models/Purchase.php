@@ -82,6 +82,7 @@ class Purchase extends AppModel
     {
         return $this->hasMany(PurchaseDetail::className(), ['purchase_id' => 'id']);
     }
+	
 
     /**
      * @return \yii\db\ActiveQuery

@@ -66,6 +66,7 @@ class SpendingDetailSearch extends SpendingDetail
 
         $query->andFilterWhere(['like', 'sd_name', $this->sd_name])
             ->andFilterWhere(['like', 'sd_ref', $this->sd_ref]);
+			
 
         return $dataProvider;
     }

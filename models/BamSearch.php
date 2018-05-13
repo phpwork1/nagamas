@@ -225,7 +225,8 @@ class BamSearch extends Bam
         foreach($model as $key => $bam){
             $activeSheet->setCellValue('A'. $rowIndex, $date!=$bam->b_date ?  Yii::$app->formatter->asDate($bam->b_date, AppConstants::FORMAT_DATE_USER_SHOW_MONTH) : '');
             $activeSheet->setCellValue('B'. $rowIndex, $bam->area->a_name);
-            $activeSheet->setCellValue('C'. $rowIndex, Yii::$app->formatter->asInteger($bam->netto));
+			$activeSheet->getStyle('C' . $rowIndex)->getNumberFormat()->setFormatCode('#,##');
+            $activeSheet->setCellValue('C'. $rowIndex, $bam->netto);
             $activeSheet->setCellValue('D'. $rowIndex, Yii::$app->formatter->asCurrency($bam->b_price));
             $activeSheet->setCellValue('E'. $rowIndex, Yii::$app->formatter->asCurrency($bam->total));
             $activeSheet->getStyle('A' . $rowIndex)->applyFromArray($styleArray);
@@ -273,7 +274,8 @@ class BamSearch extends Bam
         $activeSheet->getStyle('D' . $rowIndex)->applyFromArray($styleArray);
         $activeSheet->getStyle('E' . $rowIndex)->applyFromArray($styleArray);
         $activeSheet->setCellValue('A'. $rowIndex, AppLabels::TOTAL);
-        $activeSheet->setCellValue('C'. $rowIndex, Yii::$app->formatter->asInteger($weightTotal));
+		$activeSheet->getStyle('C' . $rowIndex)->getNumberFormat()->setFormatCode('#,##');
+        $activeSheet->setCellValue('C'. $rowIndex, $weightTotal);
         $activeSheet->setCellValue('E'. $rowIndex, Yii::$app->formatter->asCurrency($priceTotal));
 
         $rowIndex++;

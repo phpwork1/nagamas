@@ -45,6 +45,7 @@ class SpendingSearch extends Spending
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+			'sort'=> ['defaultOrder' => ['s_date' => SORT_DESC]]
         ]);
 
         $this->load($params);

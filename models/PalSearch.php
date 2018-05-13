@@ -253,7 +253,8 @@ class PalSearch extends Pal
         foreach($model as $key => $pal){
             $activeSheet->setCellValue('A'. $rowIndex, $date!=$pal->p_date ?  Yii::$app->formatter->asDate($pal->p_date, AppConstants::FORMAT_DATE_USER_SHOW_MONTH) : '');
             $activeSheet->setCellValue('B'. $rowIndex, $pal->area->a_name);
-            $activeSheet->setCellValue('C'. $rowIndex, Yii::$app->formatter->asInteger($pal->netto));
+			$activeSheet->getStyle('C' . $rowIndex)->getNumberFormat()->setFormatCode('#,##');
+            $activeSheet->setCellValue('C'. $rowIndex, $pal->netto);
             $activeSheet->setCellValue('D'. $rowIndex, Yii::$app->formatter->asCurrency($pal->p_price));
             $activeSheet->setCellValue('E'. $rowIndex, Yii::$app->formatter->asCurrency($pal->total));
             $activeSheet->getStyle('A' . $rowIndex)->applyFromArray($styleArray);
@@ -301,7 +302,8 @@ class PalSearch extends Pal
         $activeSheet->getStyle('D' . $rowIndex)->applyFromArray($styleArray);
         $activeSheet->getStyle('E' . $rowIndex)->applyFromArray($styleArray);
         $activeSheet->setCellValue('A'. $rowIndex, AppLabels::TOTAL);
-        $activeSheet->setCellValue('C'. $rowIndex, Yii::$app->formatter->asInteger($weightTotal));
+		$activeSheet->getStyle('C' . $rowIndex)->getNumberFormat()->setFormatCode('#,##');
+        $activeSheet->setCellValue('C'. $rowIndex, $weightTotal);
         $activeSheet->setCellValue('E'. $rowIndex, Yii::$app->formatter->asCurrency($priceTotal));
 
         $rowIndex++;
@@ -430,7 +432,8 @@ class PalSearch extends Pal
         foreach($model as $key => $pal){
             $activeSheet->setCellValue('G'. $rowIndex, $date!=$pal->p_date ?  Yii::$app->formatter->asDate($pal->p_date, AppConstants::FORMAT_DATE_USER_SHOW_MONTH) : '');
             $activeSheet->setCellValue('H'. $rowIndex, $pal->area->a_name);
-            $activeSheet->setCellValue('I'. $rowIndex, Yii::$app->formatter->asInteger($pal->netto));
+			$activeSheet->getStyle('I' . $rowIndex)->getNumberFormat()->setFormatCode('#,##');
+            $activeSheet->setCellValue('I'. $rowIndex, $pal->netto);
             $activeSheet->setCellValue('J'. $rowIndex, Yii::$app->formatter->asCurrency($pal->p_price-50));
             $activeSheet->setCellValue('K'. $rowIndex, Yii::$app->formatter->asCurrency($pal->netto*($pal->p_price-50)));
             $activeSheet->getStyle('G' . $rowIndex)->applyFromArray($styleArray);
@@ -478,7 +481,8 @@ class PalSearch extends Pal
         $activeSheet->getStyle('J' . $rowIndex)->applyFromArray($styleArray);
         $activeSheet->getStyle('K' . $rowIndex)->applyFromArray($styleArray);
         $activeSheet->setCellValue('G'. $rowIndex, AppLabels::TOTAL);
-        $activeSheet->setCellValue('I'. $rowIndex, Yii::$app->formatter->asInteger($weightTotal));
+		$activeSheet->getStyle('I' . $rowIndex)->getNumberFormat()->setFormatCode('#,##');
+        $activeSheet->setCellValue('I'. $rowIndex, $weightTotal);
         $activeSheet->setCellValue('K'. $rowIndex, Yii::$app->formatter->asCurrency($priceTotal));
 
         $rowIndex++;

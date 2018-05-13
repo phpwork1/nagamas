@@ -225,7 +225,8 @@ class RamSearch extends Ram
         foreach($model as $key => $ram){
             $activeSheet->setCellValue('A'. $rowIndex, $date!=$ram->r_date ?  Yii::$app->formatter->asDate($ram->r_date, AppConstants::FORMAT_DATE_USER_SHOW_MONTH) : '');
             $activeSheet->setCellValue('B'. $rowIndex, $ram->area->a_name);
-            $activeSheet->setCellValue('C'. $rowIndex, Yii::$app->formatter->asInteger($ram->netto));
+			$activeSheet->getStyle('C' . $rowIndex)->getNumberFormat()->setFormatCode('#,##');
+            $activeSheet->setCellValue('C'. $rowIndex, $ram->netto);
             $activeSheet->setCellValue('D'. $rowIndex, Yii::$app->formatter->asCurrency($ram->r_price));
             $activeSheet->setCellValue('E'. $rowIndex, Yii::$app->formatter->asCurrency($ram->total));
             $activeSheet->getStyle('A' . $rowIndex)->applyFromArray($styleArray);
@@ -273,7 +274,8 @@ class RamSearch extends Ram
         $activeSheet->getStyle('D' . $rowIndex)->applyFromArray($styleArray);
         $activeSheet->getStyle('E' . $rowIndex)->applyFromArray($styleArray);
         $activeSheet->setCellValue('A'. $rowIndex, AppLabels::TOTAL);
-        $activeSheet->setCellValue('C'. $rowIndex, Yii::$app->formatter->asInteger($weightTotal));
+		$activeSheet->getStyle('C' . $rowIndex)->getNumberFormat()->setFormatCode('#,##');
+        $activeSheet->setCellValue('C'. $rowIndex, $weightTotal);
         $activeSheet->setCellValue('E'. $rowIndex, Yii::$app->formatter->asCurrency($priceTotal));
 
         $rowIndex++;

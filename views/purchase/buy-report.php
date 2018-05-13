@@ -19,7 +19,7 @@ ReportAsset::register($this);
 
 $this->title = sprintf('%s %s', AppLabels::REPORT, AppLabels::PURCHASE);
 $this->params['breadcrumbs'][] = $this->title;
-
+$count = 0;
 ?>
 
 <div class="transaction-report">
@@ -97,16 +97,15 @@ $this->params['breadcrumbs'][] = $this->title;
                             $laborTotal += $purchase->labor;
                             $stampTotal += $purchase->stamp;
                             $cleanTotal = $dirtyTotal - $commissionTotal - $laborTotal - $stampTotal;
-
                             ?>
                             <tr>
                                 <td class="text-center"><?php Modal::begin([
-                                        'id' => 'historySellerModal' . $purchase->seller->id,
+                                        'id' => 'historySellerModal' . $count++,
                                         'header' => '<h2>Riwayat Penjualan ' . '</h2>',
                                         'toggleButton' => ['label' => $purchase->seller->s_name, 'class' => 'btn transparent'],
                                         'size' => Modal::SIZE_LARGE,
                                     ]);
-                                    echo $this->render('historySellerModal', ['model' => $purchase->seller]);
+                                    echo $this->render('historySellerModal', ['model' => $purchase->seller, 'date' => $purchase->p_date]);
                                     Modal::end(); ?></td>
                                 <td class="text-center"> <?php Modal::begin([
                                     'id' => 'purchaseDetailModal' . $purchase->id,

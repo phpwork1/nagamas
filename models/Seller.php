@@ -20,6 +20,7 @@ use yii\helpers\ArrayHelper;
  * @property int $updated_at
  *
  * @property Purchase[] $purchases
+ * @property Purchase[] $purchasesLimitBy
  */
 class Seller extends \yii\db\ActiveRecord
 {
@@ -93,5 +94,14 @@ class Seller extends \yii\db\ActiveRecord
     public function getPurchases()
     {
         return $this->hasMany(Purchase::className(), ['seller_id' => 'id'])->orderBy(['p_date' => SORT_DESC]);
+    }
+	
+	/**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPurchasesLimitBy($limit = 5, $date)
+    {
+		$date = Yii::$app->formatter->asDate($date, AppConstants::FORMAT_DB_DATE_PHP);
+        return $this->hasMany(Purchase::className(), ['seller_id' => 'id'])->where(['<=', 'p_date', $date])->limit($limit)->orderBy(['p_date' => SORT_DESC]);
     }
 }

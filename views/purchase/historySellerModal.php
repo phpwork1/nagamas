@@ -9,7 +9,7 @@ use app\components\base\AppLabels;
 
 
 <div class="row">
-    <?php foreach ($model->purchases as $key => $purchase) :
+    <?php foreach ($model->getPurchasesLimitBy(5, $date)->all() as $key => $purchase) :
         $count = 0;
         ?>
         <table id="table-item" class="table table-bordered table-hover">

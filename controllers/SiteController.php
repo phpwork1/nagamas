@@ -74,6 +74,7 @@ class SiteController extends Controller
     public function actionIndex()
     {
         $model = new TransactionDetail();
+		$model->td_type = 1;
         $modelPurchase = new PurchaseDetail();
 
         if(Yii::$app->request->isPost){
@@ -87,6 +88,7 @@ class SiteController extends Controller
                 if ($model->load(Yii::$app->request->post()) && $model->saveTransactional()) {
                     Yii::$app->session->setFlash('success', AppConstants::MESSAGE_SAVE_SUCCESS);
                     $model = new TransactionDetail();
+					$model->td_type = 1;
                 }
             }
         }

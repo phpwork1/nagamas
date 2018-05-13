@@ -77,11 +77,10 @@ $this->params['buttons'][] = Html::a('<i class="glyphicon glyphicon-remove"></i>
                 <div class="row">
                     <table id="table-item" class="table table-bordered table-hover">
                         <thead>
+                       
                         <tr>
-                            <th class="text-center"><?= $purchases[0]->p_date ?></th>
-                        </tr>
-                        <tr>
-                            <th class="text-center" width="15%"><?= AppLabels::SELLER ?></th>
+                            <th class="text-center" width="10%"><?= AppLabels::DATE ?></th>
+                            <th class="text-center" width="10%"><?= AppLabels::SELLER ?></th>
                             <th class="text-center" width="5%"><?= AppLabels::DETAIL ?></th>
                             <th class="text-center"
                                 width="10%"><?= sprintf("%s %s", AppLabels::WEIGHT, AppLabels::RUBBER) ?></th>
@@ -93,7 +92,7 @@ $this->params['buttons'][] = Html::a('<i class="glyphicon glyphicon-remove"></i>
                             <th class="text-center" width="5%"><?= AppLabels::STAMP ?></th>
                             <th class="text-center" width="10%"><?= AppLabels::OTHER ?></th>
                             <th class="text-center"
-                                width="15%"><?= sprintf("%s %s", AppLabels::VALUE, AppLabels::CLEAN) ?></th>
+                                width="10%"><?= sprintf("%s %s", AppLabels::VALUE, AppLabels::CLEAN) ?></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -107,14 +106,8 @@ $this->params['buttons'][] = Html::a('<i class="glyphicon glyphicon-remove"></i>
 
                             ?>
                             <tr>
-                                <td class="text-center"><?php Modal::begin([
-                                        'id' => 'historySellerModal' . $purchase->seller->id,
-                                        'header' => '<h2>Riwayat Penjualan ' . '</h2>',
-                                        'toggleButton' => ['label' => $purchase->seller->s_name, 'class' => 'btn transparent'],
-                                        'size' => Modal::SIZE_LARGE,
-                                    ]);
-                                    echo $this->render('historySellerModal', ['model' => $purchase->seller]);
-                                    Modal::end(); ?></td>
+                                <td class="text-center"><?= $purchase->p_date ?></td>
+                                <td class="text-center"><?= $purchase->seller->s_name ?></td>
                                 <td class="text-center"> <?php Modal::begin([
                                         'id' => 'purchaseDetailModal' . $purchase->id,
                                         'header' => '<h2>Detail Pembelian ' . '</h2>',
