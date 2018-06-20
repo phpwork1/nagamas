@@ -205,7 +205,7 @@ $this->title = 'Dashboard';
                         <tr>
                             <td><?= $purchase->id ?></td>
                             <td><?= $purchase->seller->s_name ?></td>
-                            <td><?= Yii::$app->formatter->asInteger($purchase->getTotalWeight()) ?></td>
+                            <td><?= Yii::$app->formatter->asInteger($purchase->total_weight) ?></td>
                             <td><?= Yii::$app->formatter->asCurrency($purchase->getTotal()) ?></td>
                         </tr>
                     <?php endforeach; ?>

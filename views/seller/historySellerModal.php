@@ -38,7 +38,7 @@ use app\components\base\AppLabels;
                 <?php $count++; endforeach; ?>
             <tr>
                 <td class="text-center"><?= AppLabels::TOTAL ?></td>
-                <td class="text-center yellow"><?= Yii::$app->formatter->asInteger($purchase->getTotalWeight()) ?></td>
+                <td class="text-center yellow"><?= Yii::$app->formatter->asInteger($purchase->total_weight) ?></td>
                 <td></td>
                 <td class="text-center yellow"><?= Yii::$app->formatter->asCurrency($purchase->total_dirty) ?></td>
             </tr>

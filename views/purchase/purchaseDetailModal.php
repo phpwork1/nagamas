@@ -6,9 +6,9 @@ use app\components\base\AppLabels;
 
 ?>
 
-
 <div class="row">
-    <table id="table-item" class="table table-bordered table-hover">
+
+    <table class="table table-bordered hide table-hover table-detail">
         <thead>
         <tr>
             <th class="text-center" width="10%"> <?= AppLabels::GROUP ?></th>
@@ -21,14 +21,8 @@ use app\components\base\AppLabels;
         </tr>
         </thead>
         <tbody>
-            <?php foreach($model->purchaseDetails as $key => $detail) : ?>
-                <tr>
-                   <td class="text-center"><?= $detail->pd_name ?></td>
-                   <td class="text-center"><?= Yii::$app->formatter->asCurrency($detail->pd_rubber_price) ?></td>
-                   <td class="text-center"><?= Yii::$app->formatter->asInteger($detail->pd_rubber_weight) ?></td>
-                   <td class="text-center"><?= Yii::$app->formatter->asCurrency($detail->total) ?></td>
-                </tr>
-            <?php endforeach; ?>
         </tbody>
     </table>
+    <img class="loading-spinner" src="./../../web/img/ajax-loader.gif">
 </div>
+

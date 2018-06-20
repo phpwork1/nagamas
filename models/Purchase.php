@@ -32,6 +32,8 @@ class Purchase extends AppModel
     public $commission;
     public $stamp;
     public $labor;
+    public $total_weight;
+
     /**
      * @inheritdoc
      */
@@ -111,14 +113,17 @@ class Purchase extends AppModel
         if (!$this->p_date == '') {
             $this->p_date = Yii::$app->formatter->asDate($this->p_date, AppConstants::FORMAT_DATE_PHP_SHOW_MONTH);
         }
+        $totalWeight = 0;
+        foreach($this->purchaseDetails as $key2 => $detail){
+            $totalWeight += $detail->pd_rubber_weight;
+        }
+        $this->total_weight = $totalWeight;
 
         $this->total_dirty = $this->getTotal();
         $this->commission = $this->total_dirty*$this->p_commission/100;
         $this->stamp = $this->p_stamp*AppConstants::DEFAULT_STAMP_PRICE;
-        $this->labor = $this->getTotalWeight()*AppConstants::LABOR_CONSTANT;
+        $this->labor = $totalWeight*AppConstants::LABOR_CONSTANT;
         $this->total_clean = $this->total_dirty-$this->commission-$this->stamp-$this->labor-$this->p_other;
-
-
     }
 
     public function updateTotal(){
@@ -155,13 +160,6 @@ class Purchase extends AppModel
         return Purchase::find()->orderBy(['id' => SORT_DESC])->limit($limit)->all();
     }
 
-    public function getTotalWeight(){
-        $totalWeight = 0;
-        foreach($this->purchaseDetails as $key2 => $detail){
-            $totalWeight += $detail->pd_rubber_weight;
-        }
-        return $totalWeight;
-    }
 
     public function getTotal(){
         $total = 0;

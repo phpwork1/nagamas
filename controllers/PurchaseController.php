@@ -5,12 +5,14 @@ namespace app\controllers;
 use Yii;
 use app\models\Purchase;
 use app\models\PurchaseSearch;
+use yii\helpers\Json;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use app\components\base\AppConstants;
 use app\models\PurchaseDetailSearch;
 use app\models\PurchaseDetail;
+use app\models\Seller;
 
 /**
  * PurchaseController implements the CRUD actions for Purchase model.
@@ -209,6 +211,67 @@ class PurchaseController extends Controller
         Yii::$app->session->setFlash('success', AppConstants::MESSAGE_SAVE_DELETE);
 
         return $this->redirect(['index']);
+    }
+
+    public function actionAjaxSellerByDate()
+    {
+        $requestData = Yii::$app->request->post();
+        $sellerId = $requestData['sellerId'];
+        $date = $requestData['date'];
+        $seller = Seller::find()->where(['id' => $sellerId])->one();
+        $sellerPurchaseData = $seller->getPurchasesLimitBy(5, $date)->all();
+
+        $data = [];
+        foreach ($sellerPurchaseData as $key => $value) {
+            $detail = [];
+            $purchaseDetails = PurchaseDetail::find()->where(['purchase_id' => $value->id])->all();
+            foreach ($purchaseDetails as $keyDetails => $purchaseDetail) {
+                $detail[] = array(
+                    "name" => $purchaseDetail->pd_name,
+                    "weight" => $purchaseDetail->pd_rubber_weight,
+                    "price" => $purchaseDetail->pd_rubber_price,
+                    "total" => $purchaseDetail->total,
+                );
+            }
+            $data[] = array(
+                "date" => $value->p_date,
+                "detail" => $detail,
+                "totalWeight" => $value->total_weight,
+                "totalDirty" => $value->total_dirty,
+                "commission" => $value->commission,
+                "labor" => $value->labor,
+                "stamp" => $value->stamp,
+                "other" => $value->p_other,
+                "totalClean" => $value->total_clean,
+            );
+        }
+        if (!empty($data)) {
+            return Json::encode($data);
+        }
+        return Json::encode(false);
+    }
+
+    public function actionAjaxPurchaseDetail()
+    {
+        $requestData = Yii::$app->request->post();
+        $purchaseId = $requestData['purchaseId'];
+        $purchase = Purchase::find()->where(['id' => $purchaseId])->one();
+
+        foreach ($purchase->purchaseDetails as $keyDetails => $purchaseDetail) {
+            $detail[] = array(
+                "name" => $purchaseDetail->pd_name,
+                "weight" => $purchaseDetail->pd_rubber_weight,
+                "price" => $purchaseDetail->pd_rubber_price,
+                "total" => $purchaseDetail->total,
+            );
+        }
+        $data = array(
+            "detail" => $detail,
+        );
+        if (!empty($data)) {
+            return Json::encode($data);
+        }
+        return Json::encode(false);
     }
 
     /**

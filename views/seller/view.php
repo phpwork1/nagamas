@@ -97,7 +97,7 @@ $this->params['buttons'][] = Html::a('<i class="glyphicon glyphicon-remove"></i>
                         </thead>
                         <tbody>
                         <?php foreach ($purchases as $key => $purchase) :
-                            $weightTotal += $purchase->getTotalWeight();
+                            $weightTotal += $purchase->total_weight;
                             $dirtyTotal += $purchase->total_dirty;
                             $commissionTotal += $purchase->commission;
                             $laborTotal += $purchase->labor;
@@ -117,7 +117,7 @@ $this->params['buttons'][] = Html::a('<i class="glyphicon glyphicon-remove"></i>
                                     echo $this->render('purchaseDetailModal', ['model' => $purchase]);
                                     Modal::end(); ?>
                                 </td>
-                                <td class="text-center red-font"><?= Yii::$app->formatter->asInteger($purchase->getTotalWeight()) ?></td>
+                                <td class="text-center red-font"><?= Yii::$app->formatter->asInteger($purchase->total_weight) ?></td>
                                 <td class="text-center red-font"><?= Yii::$app->formatter->asCurrency($purchase->total_dirty) ?></td>
                                 <td class="text-center"><?= Yii::$app->formatter->asCurrency($purchase->commission) ?></td>
                                 <td class="text-center"><?= Yii::$app->formatter->asCurrency($purchase->labor) ?></td>
@@ -127,7 +127,7 @@ $this->params['buttons'][] = Html::a('<i class="glyphicon glyphicon-remove"></i>
                             </tr>
                         <?php endforeach; ?>
                         <tr>
-                            <td colspan="2"
+                            <td colspan="3"
                                 class="text-center"><?= sprintf("%s %s", AppLabels::TOTAL, AppLabels::ALL) ?> </td>
                             <td class="text-center yellow"><?= Yii::$app->formatter->asInteger($weightTotal) ?></td>
                             <td class="text-center yellow"><?= Yii::$app->formatter->asCurrency($dirtyTotal) ?></td>

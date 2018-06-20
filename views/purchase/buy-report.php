@@ -8,8 +8,10 @@ use app\assets\ReportAsset;
 use app\models\Purchase;
 use kartik\select2\Select2;
 use yii\bootstrap\Modal;
+use app\assets\BuyReportAsset;
 
 ReportAsset::register($this);
+BuyReportAsset::register($this);
 
 /* @var $this yii\web\View */
 /* @var $model \app\models\Purchase */
@@ -91,7 +93,7 @@ $count = 0;
                         </thead>
                         <tbody>
                         <?php foreach ($purchases as $key => $purchase) :
-                            $weightTotal += $purchase->getTotalWeight();
+                            $weightTotal += $purchase->total_weight;
                             $dirtyTotal += $purchase->total_dirty;
                             $commissionTotal += $purchase->commission;
                             $laborTotal += $purchase->labor;
@@ -101,22 +103,24 @@ $count = 0;
                             <tr>
                                 <td class="text-center"><?php Modal::begin([
                                         'id' => 'historySellerModal' . $count++,
+                                        'options' => ['class' => 'historySellerModal fade', 'data-id' => $purchase->seller_id, 'data-date' => $purchase->p_date],
                                         'header' => '<h2>Riwayat Penjualan ' . '</h2>',
                                         'toggleButton' => ['label' => $purchase->seller->s_name, 'class' => 'btn transparent'],
                                         'size' => Modal::SIZE_LARGE,
                                     ]);
-                                    echo $this->render('historySellerModal', ['model' => $purchase->seller, 'date' => $purchase->p_date]);
+                                    echo $this->render('historySellerModal');
                                     Modal::end(); ?></td>
                                 <td class="text-center"> <?php Modal::begin([
                                     'id' => 'purchaseDetailModal' . $purchase->id,
+                                        'options' => ['class' => 'purchaseDetailModal fade', 'data-id' => $purchase->id],
                                     'header' => '<h2>Detail Pembelian ' . '</h2>',
                                     'toggleButton' => ['label' => '<span class="glyphicon glyphicon-paperclip"></span>', 'class' => 'btn transparent'],
                                     'size' => Modal::SIZE_LARGE,
                                     ]);
-                                    echo $this->render('purchaseDetailModal', ['model' => $purchase]);
+                                    echo $this->render('purchaseDetailModal');
                                     Modal::end(); ?>
                                 </td>
-                                <td class="text-center red-font"><?= Yii::$app->formatter->asInteger($purchase->getTotalWeight()) ?></td>
+                                <td class="text-center red-font"><?= Yii::$app->formatter->asInteger($purchase->total_weight) ?></td>
                                 <td class="text-center red-font"><?= Yii::$app->formatter->asCurrency($purchase->total_dirty) ?></td>
                                 <td class="text-center"><?= Yii::$app->formatter->asCurrency($purchase->commission) ?></td>
                                 <td class="text-center"><?= Yii::$app->formatter->asCurrency($purchase->labor) ?></td>
